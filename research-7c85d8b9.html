@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; media-src data: blob:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'"><meta name="robots" content="noindex, nofollow"><meta name="referrer" content="no-referrer">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>2026年底买显卡：RTX 50 系列现在值得买吗，还是等下一代</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --surface-alt: #f0f3f7;
+    --text: #1a202c;
+    --text-muted: #526071;
+    --border: #dfe4ec;
+    --accent: #1d4ed8;
+    --accent-soft: rgba(29, 78, 216, 0.08);
+    --accent-border: rgba(29, 78, 216, 0.25);
+    --warn-bg: #fff8eb;
+    --warn-border: #f59e0b;
+    --warn-text: #92400e;
+    --danger-bg: #fef2f2;
+    --danger-text: #991b1b;
+    --ok-bg: #ecfdf5;
+    --ok-text: #065f46;
+    --info-bg: #eff6ff;
+    --info-text: #1e40af;
+    --shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+    --radius: 14px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --surface-alt: #1f2630;
+      --text: #e6edf3;
+      --text-muted: #9aa6b2;
+      --border: #2d3643;
+      --accent: #60a5fa;
+      --accent-soft: rgba(96, 165, 250, 0.12);
+      --accent-border: rgba(96, 165, 250, 0.32);
+      --warn-bg: rgba(245, 158, 11, 0.12);
+      --warn-border: #d97706;
+      --warn-text: #fcd34d;
+      --danger-bg: rgba(239, 68, 68, 0.14);
+      --danger-text: #fca5a5;
+      --ok-bg: rgba(16, 185, 129, 0.14);
+      --ok-text: #6ee7b7;
+      --info-bg: rgba(59, 130, 246, 0.14);
+      --info-text: #93c5fd;
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0d1117;
+    --surface: #161b22;
+    --surface-alt: #1f2630;
+    --text: #e6edf3;
+    --text-muted: #9aa6b2;
+    --border: #2d3643;
+    --accent: #60a5fa;
+    --accent-soft: rgba(96, 165, 250, 0.12);
+    --accent-border: rgba(96, 165, 250, 0.32);
+    --warn-bg: rgba(245, 158, 11, 0.12);
+    --warn-border: #d97706;
+    --warn-text: #fcd34d;
+    --danger-bg: rgba(239, 68, 68, 0.14);
+    --danger-text: #fca5a5;
+    --ok-bg: rgba(16, 185, 129, 0.14);
+    --ok-text: #6ee7b7;
+    --info-bg: rgba(59, 130, 246, 0.14);
+    --info-text: #93c5fd;
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 16px 14px 40px;
+  }
+
+  /* Header */
+  .report-header {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 18px;
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+  }
+
+  .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .date-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-border);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .theme-btn {
+    appearance: none;
+    background: var(--surface-alt);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .theme-btn:active {
+    transform: scale(0.97);
+  }
+
+  h1 {
+    margin: 0 0 10px;
+    font-size: 22px;
+    line-height: 1.38;
+    letter-spacing: -0.01em;
+  }
+
+  .lead {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 14.5px;
+  }
+
+  /* Quick Nav */
+  .toc-nav {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 2px 12px;
+    margin-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .toc-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .toc-pill {
+    flex: 0 0 auto;
+    text-decoration: none;
+    color: var(--text-muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 500;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .toc-pill:hover, .toc-pill:focus-visible {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* Hero Conclusion */
+  .conclusion-box {
+    background: linear-gradient(135deg, var(--accent-soft), var(--surface));
+    border: 1.5px solid var(--accent-border);
+    border-left: 5px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 18px 16px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+
+  .conclusion-title {
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .conclusion-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 12px;
+  }
+
+  .conclusion-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 15.5px;
+  }
+
+  .conclusion-num {
+    display: inline-block;
+    font-weight: 700;
+    color: var(--accent);
+    margin-right: 4px;
+  }
+
+  /* Sections */
+  .section-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 16px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+
+  h2 {
+    margin: 0 0 14px;
+    font-size: 18.5px;
+    line-height: 1.4;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    margin: 18px 0 10px;
+    font-size: 16px;
+    color: var(--text);
+  }
+
+  .subq-label {
+    display: inline-block;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 2px 8px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 5px;
+    margin-right: 6px;
+    vertical-align: 1px;
+  }
+  .tag-fact { background: var(--info-bg); color: var(--info-text); }
+  .tag-view { background: var(--ok-bg); color: var(--ok-text); }
+  .tag-pred { background: var(--warn-bg); color: var(--warn-text); }
+  .tag-risk { background: var(--danger-bg); color: var(--danger-text); }
+
+  ul.clean-list {
+    margin: 10px 0 0;
+    padding-left: 18px;
+  }
+  ul.clean-list li {
+    margin-bottom: 10px;
+  }
+  ul.clean-list li:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Tables */
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 12px 0 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: left;
+  }
+
+  th, td {
+    padding: 10px 11px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--surface-alt);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .num {
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  .highlight-up {
+    color: var(--danger-text);
+    font-weight: 700;
+  }
+
+  .table-caption {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 4px 0 0;
+  }
+
+  /* Uncertain Box */
+  .uncertain-box {
+    background: var(--warn-bg);
+    border: 1px solid var(--warn-border);
+    border-radius: var(--radius);
+    padding: 18px 16px;
+    margin-bottom: 16px;
+  }
+
+  .uncertain-box h2 {
+    color: var(--warn-text);
+    border-bottom-color: rgba(217, 119, 6, 0.28);
+  }
+
+  /* Action Guide */
+  .guide-grid {
+    display: grid;
+    gap: 12px;
+  }
+
+  .guide-card {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 14px;
+  }
+
+  .guide-card strong {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 15.5px;
+    color: var(--accent);
+  }
+
+  /* Sources */
+  .sources-list {
+    margin: 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .sources-list a {
+    color: var(--accent);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .sources-list a:hover, .sources-list a:focus-visible {
+    text-decoration: underline;
+  }
+
+  .source-domain {
+    font-weight: 600;
+    color: var(--text);
+    margin-right: 6px;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 20px 10px 8px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding: 26px 20px 48px;
+    }
+    .report-header, .conclusion-box, .section-card, .uncertain-box {
+      padding: 22px 24px;
+    }
+    h1 {
+      font-size: 26px;
+    }
+    table {
+      font-size: 14.5px;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="report-header">
+    <div class="header-top">
+      <span class="date-badge">调研日期：2026 年 11 月中旬（数据截至 11 月 14 日）</span>
+      <button type="button" class="theme-btn" id="themeToggle" aria-label="切换深浅色主题">切换深浅色</button>
+    </div>
+    <h1>2026年底买显卡：RTX 50 系列现在值得买吗，还是等下一代？</h1>
+    <p class="lead">围绕现状价格、涨价动因与延续性、半代更新前景、下一代时间表以及 AMD 竞品替代方案 5 个核心子问题整理。</p>
+  </header>
+
+  <nav class="toc-nav" aria-label="快速导航">
+    <a class="toc-pill" href="#conclusion">三句话结论</a>
+    <a class="toc-pill" href="#q1">1. 现状与价格</a>
+    <a class="toc-pill" href="#q2">2. 涨价与趋势</a>
+    <a class="toc-pill" href="#q3">3. 半代更新</a>
+    <a class="toc-pill" href="#q4">4. 下一代时间表</a>
+    <a class="toc-pill" href="#q5">5. AMD 替代方案</a>
+    <a class="toc-pill" href="#conflicts">来源分歧</a>
+    <a class="toc-pill" href="#uncertain">还不确定的</a>
+    <a class="toc-pill" href="#action">行动指南</a>
+    <a class="toc-pill" href="#sources">来源列表</a>
+  </nav>
+
+  <section class="conclusion-box" id="conclusion">
+    <h2 class="conclusion-title">三句话结论</h2>
+    <ol class="conclusion-list">
+      <li class="conclusion-item">
+        <span class="conclusion-num">1.</span><span class="tag tag-view">观点</span><strong>从性价比角度看，目前绝不是购买 RTX 50 系列单卡（尤其是高端型号）的好时机：</strong>受全球显存危机影响，RTX 5090 和 5080 的实际零售价已飙升至首发指导价（MSRP）的 2 到 3.5 倍以上，且 11 月仍在执行新一轮涨价。
+      </li>
+      <li class="conclusion-item">
+        <span class="conclusion-num">2.</span><span class="tag tag-pred">预测</span><strong>但“持币等下一代”策略同样面临极高风险：</strong>由于 AI 数据中心锁死了 2027 年的 DRAM/GDDR7 产能，显存短缺预计在 2027 年进一步恶化，且多项权威爆料指出 RTX 60 系列（及 AMD 旗舰 RDNA 5）可能推迟至 2027 年下半年甚至 2028 年。
+      </li>
+      <li class="conclusion-item">
+        <span class="conclusion-num">3.</span><span class="tag tag-view">观点</span><strong>综合建议按刚需分级决策：</strong>若非刚需建议直接跳过 2026-2027 周期；若有年底刚需，高端用户建议选购溢价相对可控的整机（BTO），中高端游戏玩家建议在 11-12 月新一轮涨价完全落地前，转向性价比明显更高的 AMD RX 9070 XT 或贴近原价的 RTX 5060（8GB）系列。
+      </li>
+    </ol>
+  </section>
+
+  <!-- 子问题 1 -->
+  <section class="section-card" id="q1">
+    <span class="subq-label">子问题 1</span>
+    <h2>2026 年 11 月 RTX 50 系列的实际市场价格与库存如何？</h2>
+    <p><span class="tag tag-fact">事实</span>美国市场高端型号价格严重脱离首发指导价（MSRP），仅有 8GB 显存的入门卡涨幅较小。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>型号</th>
+            <th>首发 MSRP（美元）</th>
+            <th>2026-11-03 美国最低现货价</th>
+            <th>价格变化对比</th>
+            <th>来源</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>RTX 5090</strong></td>
+            <td class="num">$1,999</td>
+            <td class="num highlight-up">$6,919</td>
+            <td class="num">约 3.46 倍</td>
+            <td>Tom's Hardware</td>
+          </tr>
+          <tr>
+            <td><strong>RTX 5080</strong></td>
+            <td class="num">$999</td>
+            <td class="num highlight-up">$1,999</td>
+            <td class="num">2.00 倍</td>
+            <td>Tom's Hardware</td>
+          </tr>
+          <tr>
+            <td><strong>RTX 5070 Ti</strong></td>
+            <td class="num">$749</td>
+            <td class="num highlight-up">$1,399</td>
+            <td class="num">约 1.87 倍</td>
+            <td>Tom's Hardware</td>
+          </tr>
+          <tr>
+            <td><strong>RTX 5070</strong></td>
+            <td class="num">$549</td>
+            <td class="num">$899</td>
+            <td class="num">约 1.64 倍</td>
+            <td>Tom's Hardware</td>
+          </tr>
+          <tr>
+            <td><strong>RTX 5060 Ti 16GB</strong></td>
+            <td class="num">$429</td>
+            <td class="num">$769</td>
+            <td class="num">约 1.79 倍</td>
+            <td>Tom's Hardware</td>
+          </tr>
+          <tr>
+            <td><strong>RTX 5060 8GB</strong></td>
+            <td class="num">$299</td>
+            <td class="num">$449</td>
+            <td class="num">约 1.50 倍（涨幅较小）</td>
+            <td>Tom's Hardware</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>市场 / 渠道</th>
+            <th>观测日期</th>
+            <th>价格与库存现状</th>
+            <th>来源</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>美国 eBay 二手</td>
+            <td class="num">截至 2026-11-13</td>
+            <td>RTX 5090 二手价达 <strong class="highlight-up">$5,499</strong>（比 $1,999 首发价高出 175%）</td>
+            <td>Best Value GPU</td>
+          </tr>
+          <tr>
+            <td>美国 Newegg 全新</td>
+            <td class="num">2026 年 11 月</td>
+            <td>RTX 5090 每日最低中位价达 <strong class="highlight-up">$7,999</strong></td>
+            <td>Best Value GPU</td>
+          </tr>
+          <tr>
+            <td>美国官方与实体渠道</td>
+            <td class="num">2026-10-10 起</td>
+            <td>传出 GB202 芯片被转产服务器产品消息；Micro Center 停售 RTX 5090，NVIDIA 官网商城将其下架</td>
+            <td>Wikipedia</td>
+          </tr>
+          <tr>
+            <td>日本单卡市场</td>
+            <td class="num">截至 2026-11-10</td>
+            <td>RTX 5090 维持在 <strong>120 万日元</strong>左右；RTX 5080 最便宜现货从 10 月 31 日的 359,800 日元微调至 <strong>329,800 日元</strong>（11 月 14 日短暂跌破 30 万日元），仍处高价区间</td>
+            <td>CORE SPEC / GAZLOG</td>
+          </tr>
+          <tr>
+            <td>日本 BTO 整机市场</td>
+            <td class="num">2026-11-10</td>
+            <td>仍有促销，PC Shop SEVEN 促销中搭载 RTX 5090 的整机售 <strong>1,399,800 日元</strong>（不含税）</td>
+            <td>PC Shop SEVEN / ASCII</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 子问题 2 -->
+  <section class="section-card" id="q2">
+    <span class="subq-label">子问题 2</span>
+    <h2>为什么 2026 年底显卡全面涨价，趋势会延续到 2027 年吗？</h2>
+    <p><span class="tag tag-fact">事实</span>2026 年 11 月中国及全球渠道继续大幅上调出货价，直接诱因为显存供应紧张及铜等原材料成本上涨。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>厂商 / 渠道</th>
+            <th>消息日期</th>
+            <th>型号</th>
+            <th>当轮出货涨价幅度</th>
+            <th>来源</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>七彩虹、影驰等 AIC</td>
+            <td class="num">2026-11-03</td>
+            <td>RTX 5090 DV2</td>
+            <td class="num highlight-up">+2,200~3,300 元人民币（约 $329~$494）</td>
+            <td>ChannelGate / TechPowerUp</td>
+          </tr>
+          <tr>
+            <td>七彩虹、影驰等 AIC</td>
+            <td class="num">2026-11-03</td>
+            <td>RTX 5080</td>
+            <td class="num highlight-up">+2,500~2,800 元人民币（约 $374~$419）</td>
+            <td>ChannelGate / TechPowerUp</td>
+          </tr>
+          <tr>
+            <td>七彩虹、影驰等 AIC</td>
+            <td class="num">2026-11-03</td>
+            <td>RTX 5070 Ti</td>
+            <td class="num">+1,000 元人民币（约 $150）</td>
+            <td>ChannelGate / TechPowerUp</td>
+          </tr>
+          <tr>
+            <td>七彩虹、影驰等 AIC</td>
+            <td class="num">2026-11-03</td>
+            <td>RTX 5060</td>
+            <td class="num">+150~200 元人民币</td>
+            <td>ChannelGate / TechPowerUp</td>
+          </tr>
+          <tr>
+            <td>微星（MSI）中国客户通知</td>
+            <td class="num">2026-11-11</td>
+            <td>RTX 5080</td>
+            <td class="num highlight-up">最高可达 +$1,200</td>
+            <td>TweakTown</td>
+          </tr>
+          <tr>
+            <td>微星（MSI）中国客户通知</td>
+            <td class="num">2026-11-11</td>
+            <td>RTX 5070 Ti</td>
+            <td class="num highlight-up">最高可达 +$600</td>
+            <td>TweakTown</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ul class="clean-list">
+      <li><span class="tag tag-pred">预测</span><strong>11 月底美国市场恐再创新高：</strong>媒体分析认为，随着新一轮渠道涨价传导，原本已达 $2,000 的 RTX 5080 在 11 月底可能向 <strong>$2,500 甚至 $3,000</strong> 逼近（TechRadar / BigGo Finance）。</li>
+      <li><span class="tag tag-fact">事实</span><span class="tag tag-pred">预测</span><strong>2027 年显存危机预计比 2026 年更严重：</strong>2026 年 8 月业内传出三星、SK 海力士和美光 2027 年全年的 DRAM 与 HBM 产能已被预订一空（DigiTimes）。三星在 2026 年 Q2 财报会议上确认，预计 2027 年 DRAM 短缺将“比 2026 年更严重”，且短缺将持续至 2028 年（OC3D）。2026 年 11 月 4 日，十铨科技（TeamGroup）CEO 警告称，存储短缺将在 2026 年底至 2027 年初达到顶峰，明年价格“完全没有下降趋势”（Tom's Hardware）。</li>
+    </ul>
+  </section>
+
+  <!-- 子问题 3 -->
+  <section class="section-card" id="q3">
+    <span class="subq-label">子问题 3</span>
+    <h2>近期会有 RTX 50 Super 或 24GB 大显存版来救场吗？</h2>
+    <ul class="clean-list">
+      <li><span class="tag tag-fact">事实</span><span class="tag tag-pred">预测</span><strong>RTX 5080 24GB 与 RTX 50 Super 计划已被搁置或取消：</strong>单颗 3GB GDDR7 显存模块的成本约为现有 2GB 模块的 <strong>3 倍</strong>。</li>
+      <li><strong>2026 年 11 月 2 日（BenchLife）：</strong>报道称截至 10 月底 AIB 厂商仍未收到 RTX 5080 24GB 的设计资料，无法在 2027 年 1 月发售。</li>
+      <li><strong>2026 年 11 月 11 日（博板堂 / Board Channels）：</strong>消息指出由于 3GB GDDR7 成本过高（若推出售价将逼近 <strong>$2,000</strong>），NVIDIA 已通知合作伙伴取消了原定于 2027 年 1 月推出的 RTX 5080 24GB 计划，继续保留 16GB 版本生产（BigGo Finance / CORE SPEC）。</li>
+      <li><strong>RTX 50 Super 系列：</strong>同样需要依赖 3GB GDDR7 显存的 RTX 50 Super 系列也被报道已遭搁置或取消（Tom's Hardware）。</li>
+    </ul>
+  </section>
+
+  <!-- 子问题 4 -->
+  <section class="section-card" id="q4">
+    <span class="subq-label">子问题 4</span>
+    <h2>NVIDIA 下一代（RTX 60 系列）何时发布？“等下一代”需要等多久？</h2>
+    <ul class="clean-list">
+      <li><span class="tag tag-pred">预测</span><strong>权威爆料指向推迟至 2028 年：</strong>2026 年 9 月 21 日，过往准确率极高的硬件爆料人 Kopite7kimi 在 X 平台发文称，基于 Rubin 架构的消费级游戏显卡（代号 GR20x，即 RTX 60 系列）“再次推迟，是 <strong>2028 年</strong>的产品”（Tom's Hardware / BigGo Finance）。</li>
+      <li><span class="tag tag-view">观点</span><strong>推迟原因在于 AI 优先与成本倒挂：</strong>分析指出，NVIDIA 预计仅在 2027 年第三季度就能从数据中心 Vera Rubin 加速器中获得 <strong>200 亿美元</strong>收入；在 DRAM 极度短缺和组件涨价的背景下，过早推出消费级新品在经济上不可行（BigGo Finance）。</li>
+    </ul>
+  </section>
+
+  <!-- 子问题 5 -->
+  <section class="section-card" id="q5">
+    <span class="subq-label">子问题 5</span>
+    <h2>同期 AMD 显卡的表现与下一代（RDNA 5）时间表如何？</h2>
+    <p><span class="tag tag-fact">事实</span>受 GDDR6 涨价影响，AMD 在 2026 年 10 月也上调了套件价格，但相比同级 N 卡仍具备明显性价比优势。</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>维度 / 型号</th>
+            <th>最新价格与市场表现（2026 年 10–11 月）</th>
+            <th>来源</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>10 月零售涨幅（vs 9 月）</strong></td>
+            <td>RX 9070 XT 上涨 <strong>12%</strong>；RX 9060 XT 16GB 上涨 <strong>17%</strong></td>
+            <td>Hardware Unboxed / TechPowerUp</td>
+          </tr>
+          <tr>
+            <td><strong>11 月美国 RX 9070 XT</strong></td>
+            <td>全新最低价起于 <strong>$689~$790</strong>，均价在 <strong>$959</strong> 左右</td>
+            <td>Best Value GPU / DropReference</td>
+          </tr>
+          <tr>
+            <td><strong>日本市场对比 N 卡</strong></td>
+            <td>RX 9070 XT 突破 15 万日元，仍比性能相近的 RTX 5070 Ti 便宜约 <strong>8 万日元</strong>；RX 9060 XT 16GB 比 RTX 5060 Ti 16GB 便宜约 <strong>4.8 万日元</strong></td>
+            <td>GAZLOG</td>
+          </tr>
+          <tr>
+            <td><strong>11 月–2027 年 1 月预期</strong></td>
+            <td><span class="tag tag-pred">预测</span>博板堂 10 月 30 日消息称 11 月计划再涨 GPU 及显存套件价；年末至 2027 年 1 月 RX 9000 系列供应量预计最多减少 <strong>50%</strong></td>
+            <td>TechPowerUp / GAZLOG</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>AMD 下一代 RDNA 5（GFX13）时间表</h3>
+    <ul class="clean-list">
+      <li><span class="tag tag-fact">事实</span><strong>驱动补丁已现身：</strong>2026 年 11 月 9 日，AMD 工程师向 Linux 驱动提交了次世代 GPU“GFX13”（RDNA 5）的初期补丁（GAZLOG）。</li>
+      <li><span class="tag tag-pred">预测</span><strong>分批亮相，旗舰要等 2028 年：</strong>根据爆料人 Kepler_L2 在 2026 年 10 月 12 日的预测，RDNA 5 最早也要到 2027 年 6 月 Computex 之后（即 <strong>2027 年下半年</strong>）才会亮相，且 2027 年仅会推出中端型号“AT2”（RX 9070 XT 的继任者），旗舰型号（AT0）及其他衍生型号要等到 <strong>2028 年</strong>（TechPowerUp / GAZLOG）。</li>
+    </ul>
+  </section>
+
+  <!-- 来源分歧 -->
+  <section class="section-card" id="conflicts">
+    <h2>不同来源说法不一致的地方</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>争议焦点</th>
+            <th>说法 A</th>
+            <th>说法 B / 反驳</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>1. RTX 60 系列（Rubin）发布时间</strong></td>
+            <td><strong>2027 上半年说：</strong>2026 年 9 月 14 日 Moore's Law Is Dead 援引“NVIDIA 内部匿名消息源”称已批准目标在 2027 年上半年推出（TweakTown / Notebookcheck）。</td>
+            <td><strong>2028 年说：</strong>9 月 21 日 Kopite7kimi 直接反驳，明确表示 GR20x（游戏级 Rubin）已再次推迟至 2028 年（Tom's Hardware）。XenoSpectrum 亦在 9 月 16 日质疑匿名源的“内部批准技术目标”不等同于最终上市时间。</td>
+          </tr>
+          <tr>
+            <td><strong>2. RTX 5090 是否已经停产</strong></td>
+            <td><strong>停产 / 断供说：</strong>10 月 10 日起多家媒体报道 GB202 芯片全部转移至工作站与服务器，PC Games Hardware 称厂商正获取最后一批配额，随后 Micro Center 与官网商城均下架（Wikipedia）。</td>
+            <td><strong>官方否认：</strong>NVIDIA 官方出面否认停产传闻，声称 RTX 5090 并未停产（Wikipedia），且 11 月初中国市场仍在针对 RTX 5090 DV2 制定涨价通知（TechPowerUp）。</td>
+          </tr>
+          <tr>
+            <td><strong>3. 2027 年 PC 硬件价格何时见顶回落</strong></td>
+            <td><strong>持续恶化说：</strong>三星（7月30日）、TrendForce（7月30日）和十铨科技 CEO（11月4日）均预测 2027 年 DRAM 供应极度紧张且价格无回落迹象；SK 海力士甚至警告短缺可能持续至 2030 年（OC3D / PR Newswire / Tom's Hardware / Instant Gaming News）。</td>
+            <td><strong>2027 下半年缓解说：</strong>宏碁（Acer）CEO 陈俊圣（Jason Chen）预测 PC 组件价格 2026 年底前涨 5%~20%，2027 上半年进入平台期，并在 2027 年下半年反转下降，仅最高端芯片维持短缺，并直言“大多数供应商想尽可能长时间地炒作短缺”（Tom's Hardware）。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 单独一节：还不确定的 -->
+  <section class="uncertain-box" id="uncertain">
+    <h2>还不确定的 / 查不到的地方</h2>
+    <ul class="clean-list">
+      <li><strong>官方未公布任何次世代时间表与规格：</strong>截至 2026 年 11 月 14 日，NVIDIA 官方拒绝对 RTX 60 系列（Rubin）发表任何评论（Tom's Hardware）；AMD 官方也从未正式确认 RDNA 5（GFX13）的发布日期、流处理器数量、光追性能或最终命名（GAZLOG）。</li>
+      <li><strong>RTX 5080 24GB 是否彻底死亡：</strong>虽然中国渠道（博板堂）称 2027 年 1 月的发售计划已被撤回，但 NVIDIA 从未正式发布过该产品，因此无法查证该型号是“彻底取消研发”还是“无限期搁置等待显存降价”（CORE SPEC / BigGo Finance）。</li>
+      <li><strong>11 月涨价向零售端传导的最终上限：</strong>虽然查到了 AIC 厂商在 11 月初调高出货价（如微星最高调涨 $1,200、国内渠道调涨 100~3300 元不等），但零售商结合自身库存后在 12 月呈现的最终实际成交价，目前仍处于动态变化中，无法精确定量。</li>
+    </ul>
+  </section>
+
+  <!-- 行动指南 -->
+  <section class="section-card" id="action">
+    <h2>对提问者的实际意义（行动指南）</h2>
+    <p class="lead" style="margin-bottom: 14px;">在 2026 年 11 月中旬，“买 RTX 50 还是等下一代”已不再是常规的“早买早享受、晚买享折扣”，而是一场<strong>规避供应链危机</strong>的决策：</p>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <strong>1. 非刚需：放弃“等几个月就能买到便宜新卡”的幻想</strong>
+        如果打算等 RTX 50 Super 或 RTX 60 系列，意味着至少要熬过整个 2027 年（甚至到 2028 年）。2027 年显存产能已被 AI 巨头买断，即便 2027 年底有新卡发布，大概率也会重演高昂的首发溢价。手头旧卡若还能凑合用，建议做好使用到 2028 年的准备。
+      </div>
+      <div class="guide-card">
+        <strong>2. 高配刚需（5080 / 5090）：看整机（BTO），别买散片</strong>
+        因 AI 本地部署或 4K 极限游戏必须在年底购入高端 N 卡，单买散片会承受重度溢价（美区 5080 翻倍至 $2,000、5090 炒到 $6,000+）。目前 BTO 整机商手里还有按早期合同价锁定的 GPU 库存，买品牌整机或定制整机比自己单买组装划算得多，但整机商很快也会因缺货缩减可选配置。
+      </div>
+      <div class="guide-card">
+        <strong>3. 中高配游戏刚需（5070 / 5070 Ti 级别）：转向 A 卡或抢搭末班车</strong>
+        预算在 $600~$1,000（或人民币 4000~8000 元 / 日元 10万~15万）的游戏玩家，目前 RTX 5070 Ti 溢价极不合理。建议转向 <strong>AMD Radeon RX 9070 XT（16GB）</strong>——光栅性能略强于 RTX 5070 Ti，价格便宜约 30%~40%（日本市场便宜 8 万日元，11 月第二周部分型号有阶段性促销）。由于 11 月中下旬新一轮渠道涨价将在零售端生效，<strong>11 月内下单比拖到 12 月更明智</strong>。
+      </div>
+      <div class="guide-card">
+        <strong>4. 主流 1080p/2K 轻度玩家：8GB 显卡是目前唯一的“避风港”</strong>
+        这轮涨价的核心推手是显存（VRAM）成本，大容量显存卡涨得最凶，而 <strong>RTX 5060 8GB / 5060 Ti 8GB</strong> 是目前唯一价格还贴近首发价（MSRP）的区间。若预算有限且对高画质爆显存不敏感，结合 DLSS 4.5 和多帧生成技术，买 8GB 入门卡过渡是当下花冤枉钱最少的选择。
+      </div>
+    </div>
+  </section>
+
+  <!-- 来源列表 -->
+  <section class="section-card" id="sources">
+    <h2>来源列表</h2>
+    <ol class="sources-list">
+      <li><span class="source-domain">techpowerup.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEJ5T2H0TiNGvDe9kYEtCie0mGbY12zypdM-7--r7Pe4Il-deYJZY1aKbI-snI0VOitmWqdS6sLUH6qBc3i6m263iIcTThYS1RklXuzwKQymnIL3P1teXzHWm9PTZK6LM76Y9z7jXX0LFfq9Tw5uS12HwYnahXMTAwsfZvSMXRlUnTjlQ-5-1K0GQ2iay6bs618RO42U9md6dYImbLL8mVZYLNwOLIS" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEJ5T2H0TiNGvDe9kYEtCie0mGbY12zypdM-7--r7Pe4Il-deYJZY1aKbI-snI0VOitmWqdS6sLUH6qBc3i6m263iIcTThYS1RklXuzwKQymnIL3P1teXzHWm9PTZK6LM76Y9z7jXX0LFfq9Tw5uS12HwYnahXMTAwsfZvSMXRlUnTjlQ-5-1K0GQ2iay6bs618RO42U9md6dYImbLL8mVZYLNwOLIS</a></li>
+      <li><span class="source-domain">tomshardware.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEL7aJfO4wNIAkAi9D-vG4gLJK2Vij51F_uKXvnpFdFATTBj-O08T4GmjQluJxIoMvAahtZ5Mbh4jhuAFoTrgdBCCgx4reS1Jmhm4mdJzM6S5eySvOBHi5EaI8eZqWIL-9Cb5Aufv2IqFZH3trVmIA9tcngKtJF9U0vN6gn3krL7A==" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEL7aJfO4wNIAkAi9D-vG4gLJK2Vij51F_uKXvnpFdFATTBj-O08T4GmjQluJxIoMvAahtZ5Mbh4jhuAFoTrgdBCCgx4reS1Jmhm4mdJzM6S5eySvOBHi5EaI8eZqWIL-9Cb5Aufv2IqFZH3trVmIA9tcngKtJF9U0vN6gn3krL7A==</a></li>
+      <li><span class="source-domain">biggo.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE766GLcppfPuxlae8ZMkL6qEweoDXjHQ9FAn8U_BO4xKhoCpy0rOEDRbLgM9CtX7CdYTy8Ia1ExkQ3zHgflxLn1pYfXxgS4MoZcDSePAsh2L-cYcjabRA9qVKuqKsXsKCmgR5IyJoOIo7sdkTLG24b7MEpX830j1qW" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQE766GLcppfPuxlae8ZMkL6qEweoDXjHQ9FAn8U_BO4xKhoCpy0rOEDRbLgM9CtX7CdYTy8Ia1ExkQ3zHgflxLn1pYfXxgS4MoZcDSePAsh2L-cYcjabRA9qVKuqKsXsKCmgR5IyJoOIo7sdkTLG24b7MEpX830j1qW</a></li>
+      <li><span class="source-domain">techpowerup.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHr-z0Cl8WfENsc-0zqZC2cIvBbJLG-pjhIM-fp-b0ZWhJU22mybpK5AOxAFsuTUckNLZ947gohRDoYsKxO7kQMsaUUQCiOinH76e3OkvzgsVJsZMPFjasFqwhQSG4ito_761tPR4qvLUr04NE-3SSnUiK0kuXtOJDu6ciuB88_vqNstQL2mtqUJwgglA==" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHr-z0Cl8WfENsc-0zqZC2cIvBbJLG-pjhIM-fp-b0ZWhJU22mybpK5AOxAFsuTUckNLZ947gohRDoYsKxO7kQMsaUUQCiOinH76e3OkvzgsVJsZMPFjasFqwhQSG4ito_761tPR4qvLUr04NE-3SSnUiK0kuXtOJDu6ciuB88_vqNstQL2mtqUJwgglA==</a></li>
+      <li><span class="source-domain">reddit.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsNiZ0DaWgNr-2RKCUTn6wDLTQUYyGmUGfRQ1TjZrHFeAVt20s9AGwcJqNAadZco8O59jWbppzTczODltNiXm0MsBvxKmAPD5uwu9KvGocNnZ6Tl0xyp8U39WrPlXvTwVMN8WROhgT5h9Pt-97l-XE44mgG47IAAXNq394RG5PMZwJPBYwG-57k4CU_fy91GsA3j1YI2Bv" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHsNiZ0DaWgNr-2RKCUTn6wDLTQUYyGmUGfRQ1TjZrHFeAVt20s9AGwcJqNAadZco8O59jWbppzTczODltNiXm0MsBvxKmAPD5uwu9KvGocNnZ6Tl0xyp8U39WrPlXvTwVMN8WROhgT5h9Pt-97l-XE44mgG47IAAXNq394RG5PMZwJPBYwG-57k4CU_fy91GsA3j1YI2Bv</a></li>
+      <li><span class="source-domain">overclock3d.net</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGgraMgy5VHYSGoLP2GIpflgie2GBvEbqalOxhkS3LQm11XHkiTn3W-qzXI4gWSkXFPhyqaS9GoP4WJHzZRlLZUv_UiuiWo_APxYfD8nng77qcxaSLaK6FcZDGDijPZ9rxHifGUc1uzEZoH5DvdRbGHeVDmyE2gasyxDtB1xuie7AxDqtfpbWNkemwQal5DqAmiXXCqavxnuVQssg==" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGgraMgy5VHYSGoLP2GIpflgie2GBvEbqalOxhkS3LQm11XHkiTn3W-qzXI4gWSkXFPhyqaS9GoP4WJHzZRlLZUv_UiuiWo_APxYfD8nng77qcxaSLaK6FcZDGDijPZ9rxHifGUc1uzEZoH5DvdRbGHeVDmyE2gasyxDtB1xuie7AxDqtfpbWNkemwQal5DqAmiXXCqavxnuVQssg==</a></li>
+      <li><span class="source-domain">thedeskbrief.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHkJKu6aGkyMfOiQ-8n9EtRaK1nd0AzWoyaThZurWNLblOJ2JbNwlT5WEHvrXOsWXqKE1R4ZzJFdzzL3hS4GHfJ2jLFW77CSebnYy7Rvm9UDbwwZ14VJuZSKWWROfmDaENuI6fAnQOCmxJD2A==" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHkJKu6aGkyMfOiQ-8n9EtRaK1nd0AzWoyaThZurWNLblOJ2JbNwlT5WEHvrXOsWXqKE1R4ZzJFdzzL3hS4GHfJ2jLFW77CSebnYy7Rvm9UDbwwZ14VJuZSKWWROfmDaENuI6fAnQOCmxJD2A==</a></li>
+      <li><span class="source-domain">corespec-pc.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQ5FMmFWlFF44LAeXX0xpmi7Sq905UlL-YyMafz1N1Rkt8yvb5bYFxNxRx-I3JviDXrgZPkVcTtn7Kd9LPn1eUBsn1Pb_Gbl7o8NAhkfWMnNoCyKH35HzDiayxHY_9fhpkgCjXgkE-JpuWQII=" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQ5FMmFWlFF44LAeXX0xpmi7Sq905UlL-YyMafz1N1Rkt8yvb5bYFxNxRx-I3JviDXrgZPkVcTtn7Kd9LPn1eUBsn1Pb_Gbl7o8NAhkfWMnNoCyKH35HzDiayxHY_9fhpkgCjXgkE-JpuWQII=</a></li>
+      <li><span class="source-domain">ascii.jp</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG86Ur59DbtQnd2NM5gGoX5gSVChNaOLV21IInDJBCm5H8teOvmKo6_U8UJKAZoYSZol0s43xlvwB_96Qqph-hDqke7Ni1e8aQ1KoA8GAkv2XLkaDFeEezcq0qyVinG3safQuo=" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG86Ur59DbtQnd2NM5gGoX5gSVChNaOLV21IInDJBCm5H8teOvmKo6_U8UJKAZoYSZol0s43xlvwB_96Qqph-hDqke7Ni1e8aQ1KoA8GAkv2XLkaDFeEezcq0qyVinG3safQuo=</a></li>
+      <li><span class="source-domain">gazlog.jp</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFnWG0IWI4Wr8tKSHsuMhnThJN0JnL9dbVAVkzlg7FLtgRM_lKqII-aHT2j7ACaJdDscn_z8TPFGMprtZ_ik3l3V3HmlYVB_KOe7CJKufzmRJGCFbbo4xQzJhM9XezSsO1TkngEYbqkAm30WRUm7w==" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFnWG0IWI4Wr8tKSHsuMhnThJN0JnL9dbVAVkzlg7FLtgRM_lKqII-aHT2j7ACaJdDscn_z8TPFGMprtZ_ik3l3V3HmlYVB_KOe7CJKufzmRJGCFbbo4xQzJhM9XezSsO1TkngEYbqkAm30WRUm7w==</a></li>
+      <li><span class="source-domain">bestvaluegpu.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYxWh7y9SE1ZsWwY7CuAigWboVdzxpgxpvycpquNrdrwjsDMNYn6ieKcNjUwbX_rwNVLUu057kSgvpSwJ0R9LB_5hAH1wW9aB4ok4CNlrhjgj2aCB32tgYHo5nJRt7GYtPO6_t0QVVVumP-CpRjU3uFumctQC_CDKR7u46QBGAIK0pwMEv" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFYxWh7y9SE1ZsWwY7CuAigWboVdzxpgxpvycpquNrdrwjsDMNYn6ieKcNjUwbX_rwNVLUu057kSgvpSwJ0R9LB_5hAH1wW9aB4ok4CNlrhjgj2aCB32tgYHo5nJRt7GYtPO6_t0QVVVumP-CpRjU3uFumctQC_CDKR7u46QBGAIK0pwMEv</a></li>
+      <li><span class="source-domain">wikipedia.org</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEZQuln84osAq1qg9VVwhoSkBObIztRGUlcYZud7B3bM41W-S8kvrgs5ZwoajOZrDo9f92eUeR76L6qKOUmW3M80vcsh5BISzN7Kx4S1sUv6xjfpcYv--wf857YoZo_-DRdc7h2XtBpm9U=" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEZQuln84osAq1qg9VVwhoSkBObIztRGUlcYZud7B3bM41W-S8kvrgs5ZwoajOZrDo9f92eUeR76L6qKOUmW3M80vcsh5BISzN7Kx4S1sUv6xjfpcYv--wf857YoZo_-DRdc7h2XtBpm9U=</a></li>
+      <li><span class="source-domain">tweaktown.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEBCTRBkcHxn-mGUE8OG-3FxEhwoCZpRfZe0I5_OI5iBcDx2L_2uUDKaTZ4dnuqSxJnaB-vwyrKrRRnwXCTnXh1lFC-fz-KRAL1izHVOdO5GK_2FHKlshk1nSh7DKe1cPiuFP--OY7WoKpSvjwvMzgvnafvr6D6vrIFmDIY9W8WM5qFbUv4ATIx5NlC4kkMfsI-w2f4mTz4uzUVz3WMP7HSR3DC4zPser_jwAgBxJ7DIuCU" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEBCTRBkcHxn-mGUE8OG-3FxEhwoCZpRfZe0I5_OI5iBcDx2L_2uUDKaTZ4dnuqSxJnaB-vwyrKrRRnwXCTnXh1lFC-fz-KRAL1izHVOdO5GK_2FHKlshk1nSh7DKe1cPiuFP--OY7WoKpSvjwvMzgvnafvr6D6vrIFmDIY9W8WM5qFbUv4ATIx5NlC4kkMfsI-w2f4mTz4uzUVz3WMP7HSR3DC4zPser_jwAgBxJ7DIuCU</a></li>
+      <li><span class="source-domain">techradar.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG3023qXz346MMm2akinp60LbnCc4ynkSuZNHI2MnD6LKM9naCkVLB45McgluGxNea6ULjgYPQpatoxJGgDwt7UeMCdxvfyu1Z2sSB1U-LIxxsOPwk0bAcnXikqv3T4tuCzLUJMOlaomlIKO85fV2i5z1RA4g9ccVOQMQUmnlY8Zg3LfmUl_q8lWpU1ez8J0BnMouvp3sdmYd3DvFRo8H2jVoNWVd2S52AJrJmfu02j7TLWUFf_9tQw2zcpNAIe5FYOKOKnAZp8N87sbZfUPdIa2VgNtKpLFTjKcJoDe4sf-DS8VuRInOwEG1lnoyt-MZ-Dw6bodWWEhBA6wFY=" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG3023qXz346MMm2akinp60LbnCc4ynkSuZNHI2MnD6LKM9naCkVLB45McgluGxNea6ULjgYPQpatoxJGgDwt7UeMCdxvfyu1Z2sSB1U-LIxxsOPwk0bAcnXikqv3T4tuCzLUJMOlaomlIKO85fV2i5z1RA4g9ccVOQMQUmnlY8Zg3LfmUl_q8lWpU1ez8J0BnMouvp3sdmYd3DvFRo8H2jVoNWVd2S52AJrJmfu02j7TLWUFf_9tQw2zcpNAIe5FYOKOKnAZp8N87sbZfUPdIa2VgNtKpLFTjKcJoDe4sf-DS8VuRInOwEG1lnoyt-MZ-Dw6bodWWEhBA6wFY=</a></li>
+      <li><span class="source-domain">biggo.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtdMBPxnRemYbi02GNA_c7kXUqsZQswo7FO1QVHnz3u0-BHOZg7W1f4wW5KTFfHpYIist1mpHE-vKr7X13EvWyfc2pbkYufLce0smpAzkXwDxzuDmX-A6EGZ_J9gOi3_RAFxj7y8HMFDxjhCZep3C2UfKyh2siO56h" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGtdMBPxnRemYbi02GNA_c7kXUqsZQswo7FO1QVHnz3u0-BHOZg7W1f4wW5KTFfHpYIist1mpHE-vKr7X13EvWyfc2pbkYufLce0smpAzkXwDxzuDmX-A6EGZ_J9gOi3_RAFxj7y8HMFDxjhCZep3C2UfKyh2siO56h</a></li>
+      <li><span class="source-domain">digitimes.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH_hRaq5R3DOcQeTPZv1a01X_mkAhCoYXyUeiZM5eGj7W1cT1ASSdpwh5A_rS9QIsVh9wqHP1n5AM-itC42AdxNGHCIPjnyVkJYyovZGlCNa-AEMcv0Y1L-6iyQYZL4FtHDVPDgwukgwZvN4dluSC99EnL5Ugkr46KUomqskLzI0tYrlFo=" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH_hRaq5R3DOcQeTPZv1a01X_mkAhCoYXyUeiZM5eGj7W1cT1ASSdpwh5A_rS9QIsVh9wqHP1n5AM-itC42AdxNGHCIPjnyVkJYyovZGlCNa-AEMcv0Y1L-6iyQYZL4FtHDVPDgwukgwZvN4dluSC99EnL5Ugkr46KUomqskLzI0tYrlFo=</a></li>
+      <li><span class="source-domain">notebookcheck.net</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFA-FkYJyjGX6XTN6s-2AG-IlCV2w4NdYuP5Be6wcZe6rMF70H1dBqoigE4MVEnR6PI2sgo6S6-RtCqMgGVQan38hqpklFyuQkib_wOzCMYzNJYnTxykRRJ0sQ4dkM0m39GimYMXxlxOFuEOow55WRGAeLts1fHlXpNq7CyMHAvkRoHsHmOEJCx7nQoAAvdWaWzysbJzKwO4EEBFwEvctAbTyT_sabngW_om79GQw==" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFA-FkYJyjGX6XTN6s-2AG-IlCV2w4NdYuP5Be6wcZe6rMF70H1dBqoigE4MVEnR6PI2sgo6S6-RtCqMgGVQan38hqpklFyuQkib_wOzCMYzNJYnTxykRRJ0sQ4dkM0m39GimYMXxlxOFuEOow55WRGAeLts1fHlXpNq7CyMHAvkRoHsHmOEJCx7nQoAAvdWaWzysbJzKwO4EEBFwEvctAbTyT_sabngW_om79GQw==</a></li>
+      <li><span class="source-domain">tomshardware.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQ8t3TRh_skJRkNKZvm87UhNjH8vAY5r8GH9Lz1s53ZvXRAXoCP0EyWEPZUckjGDFwjLVH7M3HRUTt4DdtInWOdRt94Zqc77XrAARUlokmP3n8Lhx4--OuPSd9G9IdMOiVSNp6ZgoiLfTtV2Givh8dTde--SdcO54BDMDO_y9-WG0v5M4kZg8ly3MJipQ636dW38ATzfsisKDtO2_TqNm4COJ3cDa01W7IwO5VwpF9dWprRJKs7WYxlXI6lVOU_feTEaec018pp7naL24LRn6I13NZBpZzqAkhVu8GnsaKseIe8gc2E641QtF9NMpx9gJUN7VvHZ3SIVDkxQvw0w==" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGQ8t3TRh_skJRkNKZvm87UhNjH8vAY5r8GH9Lz1s53ZvXRAXoCP0EyWEPZUckjGDFwjLVH7M3HRUTt4DdtInWOdRt94Zqc77XrAARUlokmP3n8Lhx4--OuPSd9G9IdMOiVSNp6ZgoiLfTtV2Givh8dTde--SdcO54BDMDO_y9-WG0v5M4kZg8ly3MJipQ636dW38ATzfsisKDtO2_TqNm4COJ3cDa01W7IwO5VwpF9dWprRJKs7WYxlXI6lVOU_feTEaec018pp7naL24LRn6I13NZBpZzqAkhVu8GnsaKseIe8gc2E641QtF9NMpx9gJUN7VvHZ3SIVDkxQvw0w==</a></li>
+      <li><span class="source-domain">tomshardware.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEMgYjtxLngqUkv3GmzshkuDF-XPgNVX_f7jM5czmJwEEoPveiCptJ_Ml-hQaJjyyUIi9F0V6SltJ2BjsdYQMuUuqErvunlXwX8Oq0P33PrZi57EBRRnVMZdVbkRR9lljwUl6RE-a_il1lXMU4DzJqGu_cjXOJFbNOA_xqdL46ShPUJQiETifDBMz4MKHfDkHU34eh_dWUzzwio1Mhz8LTemjJJqrN9_pVL1etCr2Kqo5P9E5dVSnz2HJCf7DQJotZBelNKRp4WUs9SuPwV3ozhWpvrO-rZ_WhI_ktOM5O0AdwyzlbCFdcwM59kDdYdXL-KoWjw5-5WvJ4YQBpu5PWfJs97jD4flNGEFUM=" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEMgYjtxLngqUkv3GmzshkuDF-XPgNVX_f7jM5czmJwEEoPveiCptJ_Ml-hQaJjyyUIi9F0V6SltJ2BjsdYQMuUuqErvunlXwX8Oq0P33PrZi57EBRRnVMZdVbkRR9lljwUl6RE-a_il1lXMU4DzJqGu_cjXOJFbNOA_xqdL46ShPUJQiETifDBMz4MKHfDkHU34eh_dWUzzwio1Mhz8LTemjJJqrN9_pVL1etCr2Kqo5P9E5dVSnz2HJCf7DQJotZBelNKRp4WUs9SuPwV3ozhWpvrO-rZ_WhI_ktOM5O0AdwyzlbCFdcwM59kDdYdXL-KoWjw5-5WvJ4YQBpu5PWfJs97jD4flNGEFUM=</a></li>
+      <li><span class="source-domain">techpowerup.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGpLagct2xGX5QZTOJrwO0m3BWYlZ1GVZcx1LDhEJ7WqjmkA4GTqzv3wMw-jjT1RCnTAeTragKPk4udfQHZhnmbzpqB7OpYvUo96tAYc7no4_7NjTY2DZdtdiNJV_jkhktxSkCFBK7S6SZZ1fESmoxDxQgM7MG83Qfg5fOfdFKGTjDwBODkqsJy-6G8q3pQA-i3z1UjnxhgSnnDziGqmjh3yyINO8w=" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGpLagct2xGX5QZTOJrwO0m3BWYlZ1GVZcx1LDhEJ7WqjmkA4GTqzv3wMw-jjT1RCnTAeTragKPk4udfQHZhnmbzpqB7OpYvUo96tAYc7no4_7NjTY2DZdtdiNJV_jkhktxSkCFBK7S6SZZ1fESmoxDxQgM7MG83Qfg5fOfdFKGTjDwBODkqsJy-6G8q3pQA-i3z1UjnxhgSnnDziGqmjh3yyINO8w=</a></li>
+      <li><span class="source-domain">bestvaluegpu.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzwxGrjQE-6wX5IYahXiMO2f9jxcTFfxG5qzNH1U95Tg6nQpXQ1Va8Ae6LVpH-ITbM16PtWT24GsL3gEzxV-Bq1H48PabhHoukv2TNetJ1in2MV_YKO_vRoZytio1Yy5psjbllVC2A-76vCk0Tji4YkrmuYErnJjK-OBia42M9oMCQvb707Q==" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFzwxGrjQE-6wX5IYahXiMO2f9jxcTFfxG5qzNH1U95Tg6nQpXQ1Va8Ae6LVpH-ITbM16PtWT24GsL3gEzxV-Bq1H48PabhHoukv2TNetJ1in2MV_YKO_vRoZytio1Yy5psjbllVC2A-76vCk0Tji4YkrmuYErnJjK-OBia42M9oMCQvb707Q==</a></li>
+      <li><span class="source-domain">dropreference.com</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH3GYuTiA1PHKyNLvhxbrY4GONHOhi5L2cEJQkaXvtTZZ8CrYbszi6Aa2bPhAMjdUps3_OfiRCdwBq5mzVP_fhh-n5jWsh6_0Tk0coB2qfuGuVtzB9cgm92nToSShm7jVCGZhtwvUQgi-c5h-fsMSou" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQH3GYuTiA1PHKyNLvhxbrY4GONHOhi5L2cEJQkaXvtTZZ8CrYbszi6Aa2bPhAMjdUps3_OfiRCdwBq5mzVP_fhh-n5jWsh6_0Tk0coB2qfuGuVtzB9cgm92nToSShm7jVCGZhtwvUQgi-c5h-fsMSou</a></li>
+      <li><span class="source-domain">gazlog.jp</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHEUK6Tasjft_Eeyrrxp0gBy6ETNXhNhSB1SCgyselsI_KSnbJIcgbkzfRYV-ilaRXe0sd892qFhsfAKXCAh7rXuQInqgmExp2nFzV6f0G7J177upQ9jPTR45cPP_N5IIazJh2nChsNhAfvQvw--g==" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHEUK6Tasjft_Eeyrrxp0gBy6ETNXhNhSB1SCgyselsI_KSnbJIcgbkzfRYV-ilaRXe0sd892qFhsfAKXCAh7rXuQInqgmExp2nFzV6f0G7J177upQ9jPTR45cPP_N5IIazJh2nChsNhAfvQvw--g==</a></li>
+      <li><span class="source-domain">gazlog.jp</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHX_VZqBegxfQJ7zoqgfYyolx5Z_Fu0mUWrTwm8E9-1yNSHWGV6GK8mhy796ZjLLUfUnj5OFsu1R908xTBIARFhuf-EqqL7jTyO0CnadgSsXuinqtFKH4Vgg1ybPJNcUCV4Km84B4hIgJGnkshV7uEZsLg=" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHX_VZqBegxfQJ7zoqgfYyolx5Z_Fu0mUWrTwm8E9-1yNSHWGV6GK8mhy796ZjLLUfUnj5OFsu1R908xTBIARFhuf-EqqL7jTyO0CnadgSsXuinqtFKH4Vgg1ybPJNcUCV4Km84B4hIgJGnkshV7uEZsLg=</a></li>
+      <li><span class="source-domain">notebookcheck.net</span><a href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGGRyPVrfULzCRI0eTUA7rASOziMKyN-IQavXJ48eEGMlEvHkLDHxCn1KIP4TtPaglvcmvtedQolbWjzO0qI2Ox4nUnuWRiACnKbCeFri-omZTKijNz1L2_76n6000XUQ8MyrWIjjcrp-Op5yO0n1l09JrYmhjJmOpjz0e1E0S-zPVCL6eEL0sr41oJNvaCSWPdLCpqVwnnOio6a5aenJXlxQ==" target="_blank" rel="noopener noreferrer">https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGGRyPVrfULzCRI0eTUA7rASOziMKyN-IQavXJ48eEGMlEvHkLDHxCn1KIP4TtPaglvcmvtedQolbWjzO0qI2Ox4nUnuWRiACnKbCeFri-omZTKijNz1L2_76n6000XUQ8MyrWIjjcrp-Op5yO0n1l09JrYmhjJmOpjz0e1E0S-zPVCL6eEL0sr41oJNvaCSWPdLCpqVwnnOio6a5aenJXlxQ==</a></li>
+    </ol>
+  </section>
+
+  <footer>by 哈基米</footer>
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('themeToggle');
+    var root = document.documentElement;
+    function currentIsDark() {
+      var explicit = root.getAttribute('data-theme');
+      if (explicit) return explicit === 'dark';
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    function updateLabel() {
+      btn.textContent = currentIsDark() ? '切换浅色' : '切换深色';
+    }
+    updateLabel();
+    btn.addEventListener('click', function () {
+      var next = currentIsDark() ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      updateLabel();
+    });
+  })();
+</script>
+</body>
+</html>
