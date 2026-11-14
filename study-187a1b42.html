@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; media-src data: blob:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'"><meta name="robots" content="noindex, nofollow"><meta name="referrer" content="no-referrer">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>会計学（かいけいがく）期末复习指南</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --surface: #ffffff;
+      --surface-2: #eef2f8;
+      --text: #1c2430;
+      --text-muted: #5a6578;
+      --border: #dce3ee;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-soft: rgba(37, 99, 235, 0.1);
+      --debit: #0f766e;
+      --debit-soft: rgba(15, 118, 110, 0.12);
+      --credit: #b45309;
+      --credit-soft: rgba(180, 83, 9, 0.12);
+      --warn: #b91c1c;
+      --warn-bg: #fef2f2;
+      --warn-border: #fecaca;
+      --note-bg: #fffbeb;
+      --note-border: #fde68a;
+      --note-text: #92400e;
+      --success: #15803d;
+      --success-bg: #f0fdf4;
+      --success-border: #bbf7d0;
+      --shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+      --radius: 14px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0f141c;
+        --surface: #18202c;
+        --surface-2: #222c3c;
+        --text: #e6edf6;
+        --text-muted: #9aa7ba;
+        --border: #2c384b;
+        --accent: #60a5fa;
+        --accent-hover: #93c5fd;
+        --accent-soft: rgba(96, 165, 250, 0.15);
+        --debit: #2dd4bf;
+        --debit-soft: rgba(45, 212, 191, 0.14);
+        --credit: #fbbf24;
+        --credit-soft: rgba(251, 191, 36, 0.14);
+        --warn: #f87171;
+        --warn-bg: rgba(185, 28, 28, 0.16);
+        --warn-border: rgba(248, 113, 113, 0.35);
+        --note-bg: rgba(180, 83, 9, 0.16);
+        --note-border: rgba(251, 191, 36, 0.32);
+        --note-text: #fcd34d;
+        --success: #4ade80;
+        --success-bg: rgba(21, 128, 61, 0.18);
+        --success-border: rgba(74, 222, 128, 0.32);
+        --shadow: 0 4px 16px rgba(0, 0, 0, 0.32);
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0f141c;
+      --surface: #18202c;
+      --surface-2: #222c3c;
+      --text: #e6edf6;
+      --text-muted: #9aa7ba;
+      --border: #2c384b;
+      --accent: #60a5fa;
+      --accent-hover: #93c5fd;
+      --accent-soft: rgba(96, 165, 250, 0.15);
+      --debit: #2dd4bf;
+      --debit-soft: rgba(45, 212, 191, 0.14);
+      --credit: #fbbf24;
+      --credit-soft: rgba(251, 191, 36, 0.14);
+      --warn: #f87171;
+      --warn-bg: rgba(185, 28, 28, 0.16);
+      --warn-border: rgba(248, 113, 113, 0.35);
+      --note-bg: rgba(180, 83, 9, 0.16);
+      --note-border: rgba(251, 191, 36, 0.32);
+      --note-text: #fcd34d;
+      --success: #4ade80;
+      --success-bg: rgba(21, 128, 61, 0.18);
+      --success-border: rgba(74, 222, 128, 0.32);
+      --shadow: 0 4px 16px rgba(0, 0, 0, 0.32);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "PingFang SC", "Microsoft YaHei", "Noto Sans CJK JP", "Noto Sans SC", sans-serif;
+      line-height: 1.68;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Sticky Top Navigation */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .top-bar-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 10px 14px 8px;
+    }
+
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .brand-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .theme-btn {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 5px 11px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.15s ease;
+    }
+
+    .theme-btn:active {
+      transform: scale(0.97);
+    }
+
+    .toc-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .toc-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .toc-link {
+      display: inline-block;
+      white-space: nowrap;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--surface-2);
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+    }
+
+    .toc-link:hover,
+    .toc-link:focus-visible {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      outline: none;
+    }
+
+    /* Main Layout */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px 14px 48px;
+    }
+
+    section {
+      scroll-margin-top: 98px;
+      margin-bottom: 34px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .section-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Intro & Alert Boxes */
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 28px;
+    }
+
+    .hero-card p {
+      margin: 0 0 12px;
+    }
+
+    .hero-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    .note-box {
+      background: var(--note-bg);
+      border: 1px solid var(--note-border);
+      color: var(--note-text);
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 0.92rem;
+      margin-top: 10px;
+    }
+
+    /* Tag Badges */
+    .tag {
+      display: inline-block;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 6px;
+      vertical-align: middle;
+    }
+
+    .tag-asset { background: var(--debit-soft); color: var(--debit); }
+    .tag-liability { background: var(--credit-soft); color: var(--credit); }
+    .tag-equity { background: var(--accent-soft); color: var(--accent); }
+    .tag-sup { background: var(--note-bg); color: var(--note-text); border: 1px solid var(--note-border); }
+    .tag-pl { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
+    .tag-bs { background: var(--accent-soft); color: var(--accent); }
+
+    /* Outline Grid */
+    .outline-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 720px) {
+      .outline-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .outline-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .outline-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+      color: var(--accent);
+      line-height: 1.4;
+    }
+
+    .outline-card ul {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.94rem;
+    }
+
+    .outline-card li {
+      margin-bottom: 6px;
+    }
+
+    /* Concept Cards */
+    .theme-block {
+      margin-bottom: 24px;
+    }
+
+    .theme-title {
+      font-size: 1.08rem;
+      font-weight: 700;
+      margin: 0 0 10px;
+      padding: 6px 12px;
+      border-left: 4px solid var(--accent);
+      background: var(--surface-2);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .theme-lead {
+      margin: 0 0 12px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 640px) {
+      .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .concept-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 15px 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .concept-card.full-span {
+      grid-column: 1 / -1;
+    }
+
+    .concept-term {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.4;
+    }
+
+    .concept-reading {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .concept-zh {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .concept-desc {
+      font-size: 0.94rem;
+      margin: 0;
+      color: var(--text);
+    }
+
+    .elements-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    @media (min-width: 640px) {
+      .elements-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .element-item {
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 11px 13px;
+      font-size: 0.92rem;
+    }
+
+    .element-item strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .dir-left {
+      color: var(--debit);
+      font-weight: 700;
+    }
+
+    .dir-right {
+      color: var(--credit);
+      font-weight: 700;
+    }
+
+    .vocab-subhead {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 18px 0 10px;
+      color: var(--text);
+    }
+
+    /* Pitfalls */
+    .pitfall-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .pitfall-card {
+      background: var(--surface);
+      border: 1px solid var(--warn-border);
+      border-left: 5px solid var(--warn);
+      border-radius: var(--radius);
+      padding: 15px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .pitfall-card h3 {
+      margin: 0 0 8px;
+      font-size: 1.03rem;
+      color: var(--warn);
+    }
+
+    .pitfall-card ul {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.95rem;
+    }
+
+    .pitfall-card li {
+      margin-bottom: 6px;
+    }
+
+    .pitfall-card p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    /* Quiz Controls & Cards */
+    .quiz-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 16px;
+      background: var(--surface);
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .quiz-progress {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .ctrl-btn {
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .ctrl-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .quiz-part-title {
+      font-size: 1.06rem;
+      font-weight: 700;
+      margin: 22px 0 8px;
+      padding: 8px 12px;
+      background: var(--surface-2);
+      border-radius: 10px;
+      color: var(--text);
+    }
+
+    .quiz-part-note {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0 0 12px 4px;
+    }
+
+    .q-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .q-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .q-num {
+      font-weight: 800;
+      font-size: 0.98rem;
+      color: var(--accent);
+    }
+
+    .q-jp {
+      font-size: 1.02rem;
+      font-weight: 600;
+      margin: 0 0 6px;
+      color: var(--text);
+    }
+
+    .q-zh {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin: 0 0 12px;
+    }
+
+    .q-options {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    .q-options li {
+      background: var(--surface-2);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.94rem;
+    }
+
+    .toggle-ans-btn {
+      width: 100%;
+      text-align: center;
+      border: 1px solid var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.94rem;
+      font-weight: 700;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .toggle-ans-btn[aria-expanded="true"] {
+      background: var(--surface-2);
+      color: var(--text-muted);
+      border-color: var(--border);
+    }
+
+    .q-answer-box {
+      display: none;
+      margin-top: 12px;
+      padding: 13px 14px;
+      border-radius: 10px;
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      font-size: 0.94rem;
+    }
+
+    .q-answer-box.open {
+      display: block;
+    }
+
+    .ans-line {
+      font-weight: 700;
+      color: var(--success);
+      margin-bottom: 8px;
+    }
+
+    .journal-entry {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Hiragino Sans", monospace;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 11px;
+      margin: 6px 0 10px;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--text);
+      overflow-x: auto;
+    }
+
+    .exp-line {
+      margin: 0;
+      color: var(--text);
+    }
+
+    .exp-line ul {
+      margin: 6px 0 0;
+      padding-left: 18px;
+    }
+
+    /* Cheatsheet */
+    .cheat-card {
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 18px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .cheat-intro {
+      margin: 0 0 16px;
+      font-size: 0.94rem;
+      color: var(--text-muted);
+    }
+
+    .cheat-block {
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .cheat-block:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .cheat-block h3 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      color: var(--accent);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 480px;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--surface-2);
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .cheat-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 0.95rem;
+    }
+
+    .cheat-list li {
+      margin-bottom: 7px;
+    }
+
+    .flow-box {
+      background: var(--surface-2);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 0.93rem;
+      margin-bottom: 10px;
+    }
+
+    .flow-box-title {
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .flow-connector {
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.88rem;
+      color: var(--accent);
+      margin: 6px 0;
+    }
+
+    /* Footer & Back to top */
+    .site-footer {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 10px 16px 36px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    .byline {
+      margin-top: 14px;
+      font-size: 0.78rem;
+      opacity: 0.75;
+      letter-spacing: 0.04em;
+    }
+
+    .back-top {
+      position: fixed;
+      right: 16px;
+      bottom: 20px;
+      z-index: 90;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      box-shadow: var(--shadow);
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .back-top.visible {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <div class="top-bar-inner">
+      <div class="brand-row">
+        <div class="brand-title">
+          <span>📘 会計学 期末复习</span>
+          <span class="brand-badge">仕訳 · B/S · P/L</span>
+        </div>
+        <button id="themeToggle" class="theme-btn" type="button" aria-label="切换深浅色主题">🌓 切换主题</button>
+      </div>
+      <nav class="toc-nav" aria-label="目录导航">
+        <a class="toc-link" href="#outline">1. 复习提纲</a>
+        <a class="toc-link" href="#concepts">2. 概念卡片</a>
+        <a class="toc-link" href="#pitfalls">3. 易错点</a>
+        <a class="toc-link" href="#quiz">4. 练习题 25道</a>
+        <a class="toc-link" href="#cheatsheet">5. 一页速记</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero-card" aria-label="复习说明">
+      <p>同学你好！我是你的会计学助教。看到你在日本大学用日语修读「会計学（かいけいがく）」，还要应对全日语的期末考试，真的很不容易！但请放心，会计学的底层逻辑全世界都是相通的。只要跨过“日语专业术语”这道坎，理解了借贷记账法的逻辑，拿高分绝不是问题。</p>
+      <p>根据你提供的范围（<strong>仕訳、貸借対照表、損益計算書の基礎</strong>），这相当于日本簿记检定（日商簿記）3级的核心基础内容。</p>
+      <div class="note-box">
+        <strong>注：</strong>由于没有具体的课程大纲（シラバス），在“仕訳”和“报表制作”的深度上，按照日本大学《会计学原理/会计学入门》通常的教学范围（包含基础日常分录及最核心的3-4个期末决算整理事项，如折旧、坏账、费用递延等）为你补充了细节。<strong>带有“（推测补充）”标记的内容，复习时请务必核对你的课堂笔记，以任课老师讲授的范围为准。</strong>
+      </div>
+    </section>
+
+    <!-- 1. 复习提纲 -->
+    <section id="outline">
+      <div class="section-header">
+        <h2 class="section-title">1. 复习提纲（按主题）</h2>
+        <span class="section-sub">先建立整体知识框架</span>
+      </div>
+      <div class="outline-grid">
+        <article class="outline-card">
+          <h3>第一部分：会计学与复式簿记基础<br><small>（会計学と複式簿記の基礎）</small></h3>
+          <ul>
+            <li>会计的目的与会计期间（会計期間）</li>
+            <li>复式簿记（複式簿記）与取引（交易）的概念</li>
+            <li>会计五大要素（5つの要素）及其借贷方向（貸借のルール）</li>
+          </ul>
+        </article>
+        <article class="outline-card">
+          <h3>第二部分：会计分录与日常业务<br><small>（仕訳と日常取引）</small></h3>
+          <ul>
+            <li>分录（仕訳）的规则与过账（転記）</li>
+            <li>商品买卖的记账方法：三分法（三分法）—— <span class="tag tag-sup">推测补充：日本大学最常考的方法</span></li>
+            <li>现金与存款、债权与债务的基础分录</li>
+          </ul>
+        </article>
+        <article class="outline-card">
+          <h3>第三部分：决算与财务报表基础<br><small>（決算と財務諸表の基礎）</small></h3>
+          <ul>
+            <li>从试算表（試算表）到决算整理（決算整理）—— <span class="tag tag-sup">推测补充：折旧、坏账、跨期费用</span></li>
+            <li>损益表（損益計算書 - P/L）的结构、意义与当期纯利润的计算</li>
+            <li>资产负债表（貸借対照表 - B/S）的结构、意义与会计恒等式</li>
+            <li>P/L与B/S的勾稽关系（連携）</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- 2. 关键概念解释 -->
+    <section id="concepts">
+      <div class="section-header">
+        <h2 class="section-title">2. 关键概念解释（中日术语对照）</h2>
+        <span class="section-sub">卡片式速记 · 结合读音与借贷规则</span>
+      </div>
+
+      <!-- 主题一 -->
+      <div class="theme-block">
+        <h3 class="theme-title">主题一：会计五大要素与分录基础（仕訳の基礎）</h3>
+        <p class="theme-lead">会计的核心是把所有经济活动归类到<strong>5大要素</strong>中，并根据规则记在左边（借方）或右边（贷方）。</p>
+        <div class="card-grid">
+          <div class="concept-card">
+            <div class="concept-term">仕訳 <span class="concept-reading">（しわけ）</span></div>
+            <div class="concept-zh">会计分录</div>
+            <p class="concept-desc">把交易按借贷方向和会计科目记录下来的过程。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">借方 <span class="concept-reading">（かりかた）</span> / 貸方 <span class="concept-reading">（かしかた）</span></div>
+            <div class="concept-zh">借方（左侧） / 贷方（右侧）</div>
+            <p class="concept-desc"><strong>借方</strong>是分录的<strong>左侧</strong>；<strong>貸方</strong>是分录的<strong>右侧</strong>。</p>
+          </div>
+          <div class="concept-card full-span">
+            <div class="concept-term">勘定科目 <span class="concept-reading">（かんじょうかもく）</span></div>
+            <div class="concept-zh">会计科目</div>
+            <p class="concept-desc">对会计要素的具体分类名称（如：现金、销售收入等）。</p>
+          </div>
+          <div class="concept-card full-span">
+            <div class="concept-term">簿記の5要素 <span class="concept-reading">（ぼきの5ようそ）</span></div>
+            <div class="concept-zh">会计五大要素</div>
+            <div class="elements-list">
+              <div class="element-item">
+                <strong>1. 資産（しさん） - 资产</strong>
+                企业拥有的财产或权利（例：現金、売掛金、建物）。<br>
+                <span class="dir-left">增加记借方（左）</span>，减少记贷方（右）。
+              </div>
+              <div class="element-item">
+                <strong>2. 負債（ふさい） - 负债</strong>
+                将来必须偿还的义务（例：買掛金、借入金）。<br>
+                <span class="dir-right">增加记贷方（右）</span>，减少记借方（左）。
+              </div>
+              <div class="element-item">
+                <strong>3. 純資産（じゅんしさん）/ 資本（しほん） - 净资产/所有者权益</strong>
+                资产减去负债后的净额，属于股东的资金（例：資本金、繰越利益剰余金）。<br>
+                <span class="dir-right">增加记贷方（右）</span>，减少记借方（左）。
+              </div>
+              <div class="element-item">
+                <strong>4. 収益（しゅうえき） - 收入</strong>
+                导致净资产增加的原因（例：売上、受取利息）。<br>
+                <span class="dir-right">发生（增加）记贷方（右）</span>。
+              </div>
+              <div class="element-item">
+                <strong>5. 費用（ひよう） - 费用</strong>
+                为了获得收入而付出的代价（例：仕入、給料、支払家賃）。<br>
+                <span class="dir-left">发生（增加）记借方（左）</span>。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vocab-subhead">【重要基础科目词汇表】</div>
+        <div class="card-grid">
+          <div class="concept-card">
+            <div class="concept-term">売掛金 <span class="concept-reading">（うりかけきん）</span> <span class="tag tag-asset">資産</span></div>
+            <div class="concept-zh">应收账款</div>
+            <p class="concept-desc">卖了商品还没收到的钱。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">買掛金 <span class="concept-reading">（かいかけきん）</span> <span class="tag tag-liability">負債</span></div>
+            <div class="concept-zh">应付账款</div>
+            <p class="concept-desc">买了商品还没付的钱。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">受取手形 <span class="concept-reading">（うけとりてがた）</span> <span class="tag tag-asset">資産</span></div>
+            <div class="concept-zh">应收票据</div>
+            <p class="concept-desc">持有的将来可兑现收款的票据权利。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">支払手形 <span class="concept-reading">（しはらいてがた）</span> <span class="tag tag-liability">負債</span></div>
+            <div class="concept-zh">应付票据</div>
+            <p class="concept-desc">开出的将来必须付款的票据义务。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">前払金 <span class="concept-reading">（まえばらいきん）</span> <span class="tag tag-asset">資産</span></div>
+            <div class="concept-zh">预付账款</div>
+            <p class="concept-desc">先付了定金，将来有权利拿货。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">前受金 <span class="concept-reading">（まえうけきん）</span> <span class="tag tag-liability">負債</span></div>
+            <div class="concept-zh">预收账款</div>
+            <p class="concept-desc">先收了定金，将来有义务发货。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">未収金 <span class="concept-reading">（みしゅうきん）</span> <span class="tag tag-asset">資産</span></div>
+            <div class="concept-zh">其他应收款</div>
+            <p class="concept-desc">卖了<strong>非商品</strong>（如土地、设备）还没收到的钱。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">未払金 <span class="concept-reading">（みばらいきん）</span> <span class="tag tag-liability">負債</span></div>
+            <div class="concept-zh">其他应付款</div>
+            <p class="concept-desc">买了<strong>非商品</strong>还没付的钱。</p>
+          </div>
+          <div class="concept-card full-span">
+            <div class="concept-term">三分法 <span class="concept-reading">（さんぶんぽう）</span> <span class="tag tag-sup">推测补充</span></div>
+            <div class="concept-zh">三分法（商品买卖记账方法）</div>
+            <p class="concept-desc">用「<strong>仕入</strong>（しいれ - 采购费用）」、「<strong>売上</strong>（うりあげ - 销售收入）」、「<strong>繰越商品</strong>（くりこししょうひん - 库存商品/资产）」三个科目来记录商品买卖的方法。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 主题二 -->
+      <div class="theme-block">
+        <h3 class="theme-title">主题二：损益表（損益計算書 - P/L）</h3>
+        <div class="card-grid">
+          <div class="concept-card full-span">
+            <div class="concept-term">損益計算書 <span class="concept-reading">（そんえきけいさんしょ）</span> <span class="tag tag-pl">P/L</span></div>
+            <div class="concept-zh">损益表 / 利润表（Profit and Loss statement）</div>
+            <p class="concept-desc">反映企业在一定<strong>会计期间（会計期間 - かいけいきかん）</strong>内<strong>经营成果（経営成績 - けいえいせいせき）</strong>的报表。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">売上高 <span class="concept-reading">（うりあげだか）</span></div>
+            <div class="concept-zh">销售收入 / 营业收入</div>
+            <p class="concept-desc">企业通过销售商品或提供服务获得的主营收入。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">売上原価 <span class="concept-reading">（うりあげげんか）</span></div>
+            <div class="concept-zh">销售成本</div>
+            <p class="concept-desc">卖出去的那部分商品的进货成本。<br><em>计算公式：期首商品棚卸高＋当期商品仕入高－期末商品棚卸高</em></p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">売上総利益 <span class="concept-reading">（うりあげそうりえき）</span></div>
+            <div class="concept-zh">毛利</div>
+            <p class="concept-desc">売上高 － 売上原価。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">販売費及び一般管理費 <span class="concept-reading">（はんばいひおよびいっぱんかんりひ）</span></div>
+            <div class="concept-zh">销售及一般管理费用（简称「販管費」）</div>
+            <p class="concept-desc">包含工资（給料）、房租（支払家賃）、折旧费等。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">営業利益 <span class="concept-reading">（えいぎょうりえき）</span></div>
+            <div class="concept-zh">营业利润</div>
+            <p class="concept-desc">毛利 － 贩管费。主营业务赚的钱。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">当期純利益 <span class="concept-reading">（とうきじゅんりえき）</span></div>
+            <div class="concept-zh">当期净利润</div>
+            <p class="concept-desc">所有收入减去所有费用后的最终利润（如果是亏损则叫 <strong>当期純損失 - とうきじゅんそんしつ</strong>）。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 主题三 -->
+      <div class="theme-block">
+        <h3 class="theme-title">主题三：资产负债表（貸借対照表 - B/S）</h3>
+        <div class="card-grid">
+          <div class="concept-card full-span">
+            <div class="concept-term">貸借対照表 <span class="concept-reading">（たいしゃくたいしょうひょう）</span> <span class="tag tag-bs">B/S</span></div>
+            <div class="concept-zh">资产负债表（Balance Sheet）</div>
+            <p class="concept-desc">反映企业在某一特定<strong>时间点（一時点 - いちじてん，通常是期末决算日）</strong>的<strong>财务状况（財政状態 - ざいせいじょうたい）</strong>的报表。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">会計等式 <span class="concept-reading">（かいけいとうしき）</span></div>
+            <div class="concept-zh">会计恒等式</div>
+            <p class="concept-desc"><strong>資産 ＝ 負債 ＋ 純資産</strong></p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">流動資産 / 固定資産 <span class="concept-reading">（りゅうどうしさん / こていしさん）</span></div>
+            <div class="concept-zh">流动资产 / 固定资产</div>
+            <p class="concept-desc">以1年或正常营业周期为界限划分。固定资产包含建筑物（建物）、备品（備品）、土地（土地）等。</p>
+          </div>
+          <div class="concept-card full-span">
+            <div class="concept-term">繰越利益剰余金 <span class="concept-reading">（くりこしりえきじょうよきん）</span> <span class="tag tag-equity">純資産</span></div>
+            <div class="concept-zh">留存收益 / 未分配利润</div>
+            <p class="concept-desc">历年积累下来的利润。<strong>P/L算出的「当期純利益」最终会加到这里，实现两张报表的连接！</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 主题四 -->
+      <div class="theme-block">
+        <h3 class="theme-title">主题四：期末决算整理事项（決算整理仕訳） <span class="tag tag-sup">推测补充：大学期末必考重点</span></h3>
+        <div class="card-grid">
+          <div class="concept-card">
+            <div class="concept-term">減価償却費 <span class="concept-reading">（げんかしょうきゃくひ）</span></div>
+            <div class="concept-zh">折旧费（費用）</div>
+            <p class="concept-desc">固定资产因使用或时间推移而减少的价值。</p>
+          </div>
+          <div class="concept-card">
+            <div class="concept-term">減価償却累計額 <span class="concept-reading">（げんかしょうきゃくるいけいがく）</span></div>
+            <div class="concept-zh">累计折旧（资产的备抵科目）</div>
+            <p class="concept-desc">在B/S上从固定资产原值中扣除。</p>
+          </div>
+          <div class="concept-card full-span">
+            <div class="concept-term">貸倒引当金 <span class="concept-reading">（かしだおれひきあてきん）</span></div>
+            <div class="concept-zh">坏账准备</div>
+            <p class="concept-desc">为防止应收账款收不回来而提前预计的损失。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 常见易错点 -->
+    <section id="pitfalls">
+      <div class="section-header">
+        <h2 class="section-title">3. 常见易错点（試験で間違いやすいポイント）</h2>
+        <span class="section-sub">考试避坑指南</span>
+      </div>
+
+      <div class="pitfall-list">
+        <article class="pitfall-card">
+          <h3>1. 中文母语者的汉字陷阱！</h3>
+          <ul>
+            <li><strong>売掛金 / 買掛金：</strong>看到「売」是卖货，所以是别人欠我钱（应收账款＝资产）；看到「買」是买货，是我欠别人钱（应付账款＝负债）。考试紧张时极易写反！</li>
+            <li><strong>売掛金 vs 未収金 / 買掛金 vs 未払金：</strong>只要是<strong>主营商品（商品）</strong>的赊销赊购，必须用「売掛金 / 買掛金」。如果是卖了公司的旧电脑、土地，或者买办公桌没给钱，绝对不能用掛金，要用「未収金 / 未払金」。</li>
+            <li><strong>前払金 vs 前払費用：</strong>虽然中文都叫预付，但日本会计分得很细。「前払金」是买商品付的定金；「前払費用（まえばらいひよう）」是房租、保险等持续性服务提前付的下期费用（决算整理时用）。</li>
+          </ul>
+        </article>
+
+        <article class="pitfall-card">
+          <h3>2. 「仕入」和「売上」的性质混淆</h3>
+          <p>在日本的三分法中，买进商品记「仕入」，它在平时是直接作为<strong>費用（费用）</strong>处理的！而不是资产。只有到了期末决算，把没卖完的盘点出来，才转入「繰越商品（资产）」。</p>
+        </article>
+
+        <article class="pitfall-card">
+          <h3>3. P/L 和 B/S 的科目串门</h3>
+          <ul>
+            <li><strong>严禁串门！</strong>常见错误：把「前払家賃（预付房租-资产）」、「未払給料（应付工资-负债）」、「減価償却累計額（累计折旧-资产备抵）」写进 P/L。记住：带有<strong>「前払、未収、前受、未払、引当金、累計額」</strong>字样的，100% 去 <strong>B/S（貸借対照表）</strong>！</li>
+            <li>带<strong>「～費、～損、～益、支払～、受取～」</strong>字样的，100% 去 <strong>P/L（損益計算書）</strong>！</li>
+          </ul>
+        </article>
+
+        <article class="pitfall-card">
+          <h3>4. 报表对应的时间概念（选择题高频考点）</h3>
+          <p>B/S（貸借対照表）是<strong>「一時点（特定时点）」</strong>的<strong>「財政状態（财务状况）」</strong>（好比拍照片）。P/L（損益計算書）是<strong>「一定期間（一定期间）」</strong>的<strong>「経営成績（经营成果）」</strong>（好比拍视频）。题干如果把这两个交叉替换，就是错的！</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4. 练习题 25 道 -->
+    <section id="quiz">
+      <div class="section-header">
+        <h2 class="section-title">4. 练习题 25 道</h2>
+        <span class="section-sub">含日语题干、中文翻译、答案及解析</span>
+      </div>
+
+      <div class="quiz-toolbar">
+        <div class="quiz-progress">💡 点击每题下方按钮展开答案与解析</div>
+        <div class="btn-group">
+          <button id="expandAllBtn" class="ctrl-btn" type="button">全部展开</button>
+          <button id="collapseAllBtn" class="ctrl-btn" type="button">全部收起</button>
+        </div>
+      </div>
+
+      <!-- 第一部分 -->
+      <div class="quiz-part-title">【第一部分：基础概念与报表理解（选择题 1-10）】</div>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第1問</span></div>
+        <p class="q-jp">複式簿記における5つの要素のうち、増加したときに「借方（左側）」に記入する組み合わせとして、最も適切なものはどれか。</p>
+        <p class="q-zh">（在复式簿记的五大要素中，增加时记在“借方（左侧）”的最恰当组合是哪一个？）</p>
+        <ul class="q-options">
+          <li>A. 資産と負債</li>
+          <li>B. 資産と費用</li>
+          <li>C. 負債と純資産</li>
+          <li>D. 収益と費用</li>
+        </ul>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：B</div>
+          <p class="exp-line"><strong>解析：</strong>借方（左）记录的是「資産の増加」和「費用の発生」。负债、净资产的增加以及收入的发生都记在贷方（右）。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第2問</span></div>
+        <p class="q-jp">貸借対照表（B/S）に関する説明として、正しいものはどれか。</p>
+        <p class="q-zh">（关于资产负债表 B/S 的说明，正确的是哪一个？）</p>
+        <ul class="q-options">
+          <li>A. 一定期間における企業の経営成績を表す報告書である。</li>
+          <li>B. 決算日などの一時点における企業の財政状態を表す報告書である。</li>
+          <li>C. 収益から費用を差し引いて当期純利益を計算する報告書である。</li>
+          <li>D. 借方に負債と純資産、貸方に資産を記載する。</li>
+        </ul>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：B</div>
+          <p class="exp-line"><strong>解析：</strong>A和C是损益表（P/L）的定义。D说反了，B/S的借方（左）是资产，贷方（右）是负债和净资产。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第3問</span></div>
+        <p class="q-jp">次の勘定科目のうち、貸借対照表の「資産」の部に記載されるものはどれか。</p>
+        <p class="q-zh">（下列会计科目中，记载在资产负债表“资产”部分的是哪一个？）</p>
+        <ul class="q-options">
+          <li>A. 買掛金</li>
+          <li>B. 前受金</li>
+          <li>C. 前払金</li>
+          <li>D. 支払手形</li>
+        </ul>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：C</div>
+          <p class="exp-line"><strong>解析：</strong>A应付账款、B预收账款、D应付票据，将来都需要付钱或发货，属于「負債」。C「前払金（预付账款）」是付了钱将来有权利收货，属于「資産」。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第4問</span></div>
+        <p class="q-jp">次の勘定科目のうち、損益計算書（P/L）に記載されないものはどれか。</p>
+        <p class="q-zh">（下列会计科目中，<strong>不</strong>记载在损益表 P/L 中的是哪一个？）</p>
+        <ul class="q-options">
+          <li>A. 売上原価</li>
+          <li>B. 受取利息</li>
+          <li>C. 減価償却費</li>
+          <li>D. 減価償却累計額</li>
+        </ul>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：D</div>
+          <p class="exp-line"><strong>解析：</strong>A销售成本（费用）、B利息收入（收入）、C折旧费（费用）都进P/L。D「減価償却累計額（累计折旧）」是资产的备抵科目，记载在B/S中。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第5問</span></div>
+        <p class="q-jp">ある企業の期末における資産総額が5,000万円、負債総額が3,200万円であった。期首の純資産額が1,500万円であり、当期中に資本金の増減や配当の支払いがなかった場合、当期純利益はいくらか。</p>
+        <p class="q-zh">（某企业期末资产总额为5,000万日元，负债总额为3,200万日元。期初净资产为1,500万日元，若当期没有资本金增减及分红，当期净利润是多少？）</p>
+        <ul class="q-options">
+          <li>A. 300万円の利益</li>
+          <li>B. 300万円の損失</li>
+          <li>C. 1,800万円の利益</li>
+          <li>D. 3,500万円の利益</li>
+        </ul>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：A</div>
+          <p class="exp-line"><strong>解析：</strong>根据会计恒等式（資産＝負債＋純資産），期末净资产 ＝ 5,000 － 3,200 ＝ 1,800万日元。因为没有其他资本变动，净资产的增加额就是当期净利润：1,800（期末）－ 1,500（期初）＝ 300万日元。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第6問</span></div>
+        <p class="q-jp">損益計算書において、「売上高」から「売上原価」を差し引いて計算される利益の名称は何か。</p>
+        <p class="q-zh">（在损益表中，用“销售收入”减去“销售成本”计算出的利润名称是什么？）</p>
+        <ul class="q-options">
+          <li>A. 営業利益</li>
+          <li>B. 経常利益</li>
+          <li>C. 売上総利益</li>
+          <li>D. 当期純利益</li>
+        </ul>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：C</div>
+          <p class="exp-line"><strong>解析：</strong>売上高 － 売上原価 ＝ 売上総利益（毛利）。売上総利益 － 販売費及び一般管理費 ＝ 営業利益。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第7問</span></div>
+        <p class="q-jp">「会計期間」の前提（会計公準）に関する説明として、誤っているものはどれか。</p>
+        <p class="q-zh">（关于“会计期间”前提的说明，<strong>错误</strong>的是哪一个？）</p>
+        <ul class="q-options">
+          <li>A. 企業の継続的な活動を人為的に区切った期間のことである。</li>
+          <li>B. 日本の多くの企業では、1年を1会計期間としている。</li>
+          <li>C. 会計期間の始まりの日を「期首」、終わりの日を「期末（決算日）」と呼ぶ。</li>
+          <li>D. 貸借対照表は、会計期間の期首から期末までのキャッシュ（現金）の流れのみを表す。</li>
+        </ul>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：D</div>
+          <p class="exp-line"><strong>解析：</strong>B/S表示的是期末时点所有资产、负债、净资产的余额，不是现金流量（那是キャッシュ・フロー計算書的内容）。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第8問</span></div>
+        <p class="q-jp">次の取引のうち、複式簿記上の「取引（会計上の取引）」に該当しないものはどれか。</p>
+        <p class="q-zh">（下列交易中，<strong>不属于</strong>复式簿记上的“会计交易”的是哪一个？）</p>
+        <ul class="q-options">
+          <li>A. 銀行から現金100万円を借り入れた。</li>
+          <li>B. 倉庫が火災に遭い、商品50万円分が焼失した。</li>
+          <li>C. 取引先と商品200万円を来月販売する契約を結んだ（手付金等の授受はない）。</li>
+          <li>D. 従業員に給料30万円を現金で支払った。</li>
+        </ul>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：C</div>
+          <p class="exp-line"><strong>解析：</strong>经典考点！会计上的「取引」必须导致五大要素（资产、负债、净资产、收入、费用）发生金额上的增减变化。C只是签了合同（契約しただけ），没有交定金也没有发货，要素金额没变，不做分录。B虽然日常不叫交易，但商品烧毁导致资产减少、损失发生，在会计上属于「取引」。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head">
+          <span class="q-num">第9問</span>
+          <span class="tag tag-sup">推测补充：売上原価の計算</span>
+        </div>
+        <p class="q-jp">期首商品棚卸高が100,000円、当期商品仕入高が800,000円、期末商品棚卸高が150,000円のとき、当期の「売上原価」はいくらか。</p>
+        <p class="q-zh">（期初商品存货为100,000日元，当期商品采购额为800,000日元，期末商品存货为150,000日元时，当期的“销售成本”是多少？）</p>
+        <ul class="q-options">
+          <li>A. 650,000円</li>
+          <li>B. 750,000円</li>
+          <li>C. 850,000円</li>
+          <li>D. 900,000円</li>
+        </ul>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：B</div>
+          <p class="exp-line"><strong>解析：</strong>公式：売上原価 ＝ 期首（100,000）＋ 当期仕入（800,000）－ 期末（150,000）＝ 750,000円。（意思是：原本有10万，又进了80万，一共90万的货；期末还剩15万没卖掉，说明卖掉的那部分成本是75万）。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第10問</span></div>
+        <p class="q-jp">損益計算書で計算された「当期純利益」は、最終的に貸借対照表のどの区分に加算されるか。</p>
+        <p class="q-zh">（损益表中计算出的“当期净利润”，最终会加到资产负债表的哪个分类中？）</p>
+        <ul class="q-options">
+          <li>A. 流動資産</li>
+          <li>B. 固定資産</li>
+          <li>C. 負債の部</li>
+          <li>D. 純資産の部（繰越利益剰余金）</li>
+        </ul>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：D</div>
+          <p class="exp-line"><strong>解析：</strong>企业赚到的净利润归股东所有，会增加企业的净资产（具体科目为：繰越利益剰余金）。</p>
+        </div>
+      </article>
+
+      <!-- 第二部分 -->
+      <div class="quiz-part-title">【第二部分：日常业务分录（仕訳問題 11-18）】</div>
+      <p class="quiz-part-note">请写出以下业务的会计分录（借方科目、金额 / 贷方科目、金额）。</p>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第11問</span></div>
+        <p class="q-jp">会社の設立にあたり、株主から出資を受け、現金5,000,000円を当座預金口座に預け入れた。</p>
+        <p class="q-zh">（成立公司时接受股东出资，将5,000,000日元现金存入支票存款账户。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）当座預金 5,000,000 ／ （貸）資本金 5,000,000</div>
+          <p class="exp-line"><strong>解析：</strong>当座預金（支票存款，属资产）增加记借方；資本金（实收资本，属净资产）增加记贷方。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第12問</span></div>
+        <p class="q-jp">商品300,000円を仕入れ、代金のうち100,000円は現金で支払い、残額は掛けとした。（三分法による）</p>
+        <p class="q-zh">（采购商品300,000日元，货款中100,000日元用现金支付，余额赊账。采用三分法。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）仕入 300,000 ／ （貸）現金 100,000<br>　　　　　　　　　 ／ （貸）買掛金 200,000</div>
+          <p class="exp-line"><strong>解析：</strong>三分法下买商品记「仕入（费用发生，借方）」。付现金导致「現金（资产减少，贷方）」，赊账买货产生「買掛金（应付账款，负债增加，贷方）」。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第13問</span></div>
+        <p class="q-jp">原価200,000円の商品350,000円を売り上げ、代金は掛けとした。（三分法による）</p>
+        <p class="q-zh">（将成本200,000日元的商品以350,000日元售出，货款赊账。采用三分法。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）売掛金 350,000 ／ （貸）売上 350,000</div>
+          <p class="exp-line"><strong>解析：</strong><strong>易错题！</strong> 在三分法下，平时卖出商品时<strong>完全不管成本（原価200,000円是干扰项）</strong>，只按售价记账！赊销产生「売掛金（应收账款，资产增加，借方）」，确认「売上（销售收入，收入发生，贷方）」。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第14問</span></div>
+        <p class="q-jp">先月掛けで仕入れた商品の代金200,000円を、小切手を振り出して支払った。</p>
+        <p class="q-zh">（上个月赊购的商品货款200,000日元，通过签发支票支付。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）買掛金 200,000 ／ （貸）当座預金 200,000</div>
+          <p class="exp-line"><strong>解析：</strong>还清欠款，「買掛金（负债减少，借方）」。<strong>重要规则</strong>：自己签发支票（小切手を振り出して）意味着钱从自己的支票账户里扣，必须记「当座預金（贷方）」（如果收到别人开的支票，则记作「現金」）。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第15問</span></div>
+        <p class="q-jp">営業用のパソコン（備品）150,000円を購入し、代金は来月末に支払うことにした。</p>
+        <p class="q-zh">（购买营业用电脑（设备）150,000日元，货款决定下个月底支付。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）備品 150,000 ／ （貸）未払金 150,000</div>
+          <p class="exp-line"><strong>解析：</strong><strong>经典陷阱！</strong> 买的不是用于转卖的商品，而是公司自用的固定资产「備品（资产增加，借方）」。因此没给的钱绝对不能记買掛金，必须用「未払金（其他应付款，负债增加，贷方）」。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第16問</span></div>
+        <p class="q-jp">新商品の仕入れにあたり、取引先に手付金（内金）として現金50,000円を支払った。</p>
+        <p class="q-zh">（为了采购新商品，向交易方支付了50,000日元现金作为定金。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）前払金 50,000 ／ （貸）現金 50,000</div>
+          <p class="exp-line"><strong>解析：</strong>付定金时商品还没到手，不能记仕入。获得了将来拿货的权利，记「前払金（预付账款，资产增加，借方）」。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第17問</span></div>
+        <p class="q-jp">第16問で注文していた商品250,000円が到着し、代金は手付金を充当した後の残額を掛けとした。</p>
+        <p class="q-zh">（第16题订购的250,000日元商品到货，货款抵扣定金后，余额记为赊账。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）仕入 250,000 ／ （貸）前払金 50,000<br>　　　　　　　　　 ／ （貸）買掛金 200,000</div>
+          <p class="exp-line"><strong>解析：</strong>货到了，全额确认「仕入 250,000」。同时之前记的定金权利已经用掉，消除「前払金（资产减少，贷方）」，剩下的20万记入应付账款「買掛金」。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第18問</span></div>
+        <p class="q-jp">従業員に給料400,000円を支給するにあたり、所得税の源泉徴収分30,000円を差し引き、残額370,000円を普通預金口座から振り込んだ。</p>
+        <p class="q-zh">（向员工发放工资400,000日元时，扣除代扣代缴的个人所得税30,000日元，将余额370,000日元从普通存款账户转账支付。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）給料 400,000 ／ （貸）預り金 30,000<br>　　　　　　　　　 ／ （貸）普通預金 370,000</div>
+          <p class="exp-line"><strong>解析：</strong>公司的工资费用依然是全额40万（借：給料）。替税务局暂时扣下员工的税款，将来要替员工上交，对公司来说是负债，记「預り金（あずかりきん - 代扣款/其他应付款，负债增加，贷方）」。</p>
+        </div>
+      </article>
+
+      <!-- 第三部分 -->
+      <div class="quiz-part-title">【第三部分：期末决算与综合简答题（19-25）】</div>
+      <p class="quiz-part-note">（注：19-22题为推测补充的决算整理高频题，请结合课堂笔记复习）</p>
+
+      <article class="q-card">
+        <div class="q-head">
+          <span class="q-num">第19問（決算整理仕訳：売上原価の算定）</span>
+          <span class="tag tag-sup">推测补充</span>
+        </div>
+        <p class="q-jp">決算において、売上原価を「仕入」勘定で計算する。期首商品棚卸高は80,000円、期末商品棚卸高は120,000円であった。必要な決算整理仕訳を示しなさい。</p>
+        <p class="q-zh">（在决算时，在“采购”科目中计算销售成本。期初商品存货为80,000日元，期末商品存货为120,000日元。请写出必要的决算整理分录。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）仕入 80,000 　　　／ （貸）繰越商品 80,000<br>（借）繰越商品 120,000 ／ （貸）仕入 120,000</div>
+          <p class="exp-line"><strong>解析：</strong>日本会计必背口诀<strong>「し・くり・くり・し（仕・繰・繰・仕）」</strong>！<br>第一行：把期初库存转入当期仕入（借：仕入 / 貸：繰越商品 80,000）；<br>第二行：把期末没卖完的库存从仕入中剔除，变成期末资产（借：繰越商品 / 貸：仕入 120,000）。经过这两步，「仕入」科目的余额就自动变成了当期的「売上原価」！</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head">
+          <span class="q-num">第20問（決算整理仕訳：減価償却）</span>
+          <span class="tag tag-sup">推测补充</span>
+        </div>
+        <p class="q-jp">決算にあたり、期首に取得した建物（取得原価3,000,000円、残存価額ゼロ、耐用年数30年）について、定額法により減価償却を行う。（間接法で記帳すること）</p>
+        <p class="q-zh">（决算时，对期初购入的建筑物（原值3,000,000日元，残值为0，使用年限30年）按直线法计提折旧。请用间接法记账。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）減価償却費 100,000 ／ （貸）減価償却累計額 100,000</div>
+          <p class="exp-line"><strong>解析：</strong>定額法（直线法）每年折旧额 ＝ (3,000,000 - 0) ÷ 30年 ＝ 100,000日元。间接法下，借方记费用「減価償却費」，贷方不直接减少建物，而是记入备抵科目「減価償却累計額」。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head">
+          <span class="q-num">第21問（決算整理仕訳：費用の前払い）</span>
+          <span class="tag tag-sup">推测补充</span>
+        </div>
+        <p class="q-jp">決算日（3月31日）において、当期の12月1日に向こう1年分の家賃120,000円を現金で支払った際の処理を見直し、次期に属する分を前払処理する。</p>
+        <p class="q-zh">（在决算日3月31日，针对当期12月1日用现金支付未来1年房租120,000日元的账务进行调整，将属于下一期的部分作预付处理。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）前払家賃（または前払費用） 80,000 ／ （貸）支払家賃 80,000</div>
+          <p class="exp-line"><strong>解析：</strong>12月1日到3月31日属于当期的只有4个月（12、1、2、3月）。剩下的8个月（80,000日元）是替明年的房租提前付的。所以要把多算的当期费用冲掉（貸：支払家賃 80,000），同时确认为一项资产（借：前払家賃 80,000）。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head">
+          <span class="q-num">第22問（決算整理仕訳：貸倒引当金）</span>
+          <span class="tag tag-sup">推测补充</span>
+        </div>
+        <p class="q-jp">期末の売掛金残高500,000円に対して、2％の貸倒引当金を設定する。なお、決算整理前の貸倒引当金残高は3,000円である。（差額補充法による）</p>
+        <p class="q-zh">（对期末应收账款余额500,000日元按2%计提坏账准备。决算整理前的坏账准备余额为3,000日元。采用差额补充法。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：</div>
+          <div class="journal-entry">（借）貸倒引当金繰入 7,000 ／ （貸）貸倒引当金 7,000</div>
+          <p class="exp-line"><strong>解析：</strong>期末需要的坏账准备总额 ＝ 500,000 × 2% ＝ 10,000日元。因为账上已经有了3,000日元，所以只需要补提差额：10,000 － 3,000 ＝ 7,000日元。借方记费用「貸倒引当金繰入（坏账准备转入/信用减值损失）」，贷方记「貸倒引当金」。</p>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第23問（簡答・計算：損益計算書の作成）</span></div>
+        <p class="q-jp">以下の決算整理後のデータに基づき、損益計算書における(1)売上総利益、(2)営業利益、(3)当期純利益を計算しなさい。（法人税等は考慮しないものとする）<br>【データ】売上高：1,000円、売上原価：600円、給料：150円、減価償却費：50円、受取利息：20円、支払利息：30円</p>
+        <p class="q-zh">（请根据以下决算整理后的数据，计算损益表中的(1)毛利、(2)营业利润、(3)当期净利润。不考虑企业所得税等。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：<br>(1) <strong>売上総利益</strong>：400円<br>(2) <strong>営業利益</strong>：200円<br>(3) <strong>当期純利益</strong>：190円</div>
+          <div class="exp-line">
+            <strong>解析：</strong>
+            <ul>
+              <li>(1) 売上総利益 ＝ 売上高(1,000) － 売上原価(600) ＝ <strong>400円</strong>。</li>
+              <li>(2) 給料(150)和減価償却費(50)属于「販売費及び一般管理費（合计200）」。営業利益 ＝ 売上総利益(400) － 販管費(200) ＝ <strong>200円</strong>。</li>
+              <li>(3) 受取利息是营业外收入(+20)，支払利息是营业外费用(-30)。当期純利益 ＝ 200 ＋ 20 － 30 ＝ <strong>190円</strong>。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第24問（簡答・計算：貸借対照表の作成と連携）</span></div>
+        <p class="q-jp">以下の期末データに基づき、貸借対照表の(1)資産合計、(2)負債合計、(3)期末の繰越利益剰余金（純資産の一部）を計算しなさい。<br>【データ】現金：200円、売掛金：300円、建物（純額）：500円、買掛金：150円、借入金：250円、資本金：400円、期首の繰越利益剰余金：100円、当期純利益：？（自ら計算すること）</p>
+        <p class="q-zh">（根据以下期末数据，计算资产负债表的(1)资产合计、(2)负债合计、(3)期末留存收益。）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案：<br>(1) <strong>資産合計</strong>：1,000円<br>(2) <strong>負債合計</strong>：400円<br>(3) <strong>期末の繰越利益剰余金</strong>：200円（そのうち当期純利益は100円）</div>
+          <div class="exp-line">
+            <strong>解析：</strong>
+            <ul>
+              <li>(1) 資産 ＝ 現金(200) ＋ 売掛金(300) ＋ 建物(500) ＝ <strong>1,000円</strong>。</li>
+              <li>(2) 負債 ＝ 買掛金(150) ＋ 借入金(250) ＝ <strong>400円</strong>。</li>
+              <li>(3) 根据「資産(1,000) ＝ 負債(400) ＋ 純資産」，得出期末純資産合計 ＝ 600円。因为純資産 ＝ 資本金(400) ＋ 期末繰越利益剰余金，所以<strong>期末繰越利益剰余金 ＝ 600 － 400 ＝ 200円</strong>。（由于期初是100円，可知当期純利益赚了100円）。</li>
+            </ul>
+          </div>
+        </div>
+      </article>
+
+      <article class="q-card">
+        <div class="q-head"><span class="q-num">第25問（論述・簡答：複式簿記と財務諸表の関係）</span></div>
+        <p class="q-jp">「貸借対照表（B/S）と損益計算書（P/L）の目的の違い、および両者の関係（連携）について、簡潔に説明しなさい。」（試験で記述問題が出た場合の模範解答）</p>
+        <p class="q-zh">（请简述资产负债表与损益表的目的差异，以及两者的关系。——应对考试简答题的满分模板）</p>
+        <button class="toggle-ans-btn" type="button" aria-expanded="false">查看答案与解析</button>
+        <div class="q-answer-box">
+          <div class="ans-line">答案（日语背诵版）：</div>
+          <div class="journal-entry" style="font-family: inherit;">
+            損益計算書（P/L）は、<strong>一会計期間</strong>における収益と費用を対比させ、企業の<strong>経営成績</strong>（当期純利益または当期純損失）を明らかにすることを目的とする。<br><br>
+            一方、貸借対照表（B/S）は、<strong>決算日という一時点</strong>における資産、負債、純資産の残高を示し、企業の<strong>財政状態</strong>を明らかにすることを目的とする。<br><br>
+            両者の関係として、損益計算書で算出された<strong>当期純利益</strong>（または当期純損失）は、貸借対照表の純資産の部における<strong>繰越利益剰余金</strong>に加算（または減算）されることで、両者は有機的に結びついている。
+          </div>
+          <p class="exp-line"><strong>中文翻译与解析：</strong><br>
+          损益表（P/L）的目的是对比<strong>一个会计期间</strong>内的收入与费用，明确企业的<strong>经营成果</strong>（当期净利润或净亏损）。<br>
+          另一方面，资产负债表（B/S）的目的是展示在<strong>决算日这一特定时点</strong>的资产、负债、净资产余额，明确企业的<strong>财务状况</strong>。<br>
+          关于两者的关系，在损益表中计算出的<strong>当期净利润</strong>（或净亏损），会加到（或减去）资产负债表净资产部分的<strong>留存收益（繰越利益剰余金）</strong>中，从而使两张报表有机地联系在一起。<br>
+          <em>（助教提示：把上面加粗的日语关键词背下来，只要遇到论述题写上去，老师一定会给高分！）</em></p>
+        </div>
+      </article>
+    </section>
+
+    <!-- 5. 一页速记要点 -->
+    <section id="cheatsheet">
+      <div class="section-header">
+        <h2 class="section-title">5. 一页速记要点（試験直前チェックシート）</h2>
+        <span class="section-sub">进考场前10分钟速览</span>
+      </div>
+
+      <div class="cheat-card">
+        <p class="cheat-intro">你可以把下面这部分直接打印或截图保存在手机里，进考场前10分钟看：</p>
+
+        <div class="cheat-block">
+          <h3>【1. 借贷方向黄金法则（仕訳のルール）】</h3>
+          <p style="margin:0 0 10px;font-size:0.93rem;">拿到题目先找“ホームポジション（大本营）”！增加就留在原位，减少就去对面！</p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>借方（かりかた・左）</th>
+                  <th>貸方（かしかた・右）</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>資産</strong> の増加（現金、売掛金、備品、前払金）</td>
+                  <td><strong>資産</strong> の減少</td>
+                </tr>
+                <tr>
+                  <td><strong>負債</strong> の減少</td>
+                  <td><strong>負債</strong> の増加（買掛金、借入金、前受金、未払金）</td>
+                </tr>
+                <tr>
+                  <td><strong>純資産</strong> の減少</td>
+                  <td><strong>純資産</strong> の増加（資本金、繰越利益剰余金）</td>
+                </tr>
+                <tr>
+                  <td><strong>費用</strong> の発生（仕入、給料、支払家賃、減価償却費）</td>
+                  <td><strong>収益</strong> の発生（売上、受取利息、受取手数料）</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="cheat-block">
+          <h3>【2. 易混科目秒杀口诀】</h3>
+          <ul class="cheat-list">
+            <li><strong>卖货没收钱</strong> ＝ <strong>売</strong>掛金（資産・左） ｜ <strong>买货没付钱</strong> ＝ <strong>買</strong>掛金（負債・右）</li>
+            <li><strong>非商品</strong>没收/没付钱 ＝ <strong>未収金</strong>（資産） ／ <strong>未払金</strong>（負債）</li>
+            <li><strong>付定金</strong> ＝ <strong>前払金</strong>（資産・左） ｜ <strong>收定金</strong> ＝ <strong>前受金</strong>（負債・右）</li>
+            <li><strong>自己开支票</strong>（小切手振出） ＝ <strong>当座預金</strong>が減る ｜ <strong>收到别人支票</strong> ＝ <strong>現金</strong>が増える</li>
+          </ul>
+        </div>
+
+        <div class="cheat-block">
+          <h3>【3. 报表结构与公式全景图】</h3>
+          <div class="flow-box">
+            <div class="flow-box-title">■ 損益計算書 (P/L) ＝ 【一定期間】の【経営成績】</div>
+            <ul class="cheat-list">
+              <li><strong>費用（左・借方）</strong> ＋ <strong>当期純利益</strong> ＝ <strong>収益（右・貸方）</strong></li>
+              <li><strong>计算阶梯</strong>：
+                <ol style="margin:4px 0 0;padding-left:18px;">
+                  <li><code>売上高</code> － <code>売上原価</code> <em>(期首＋当期仕入－期末)</em> ＝ <strong>売上総利益</strong></li>
+                  <li><code>売上総利益</code> － <code>販売費及び一般管理費</code> <em>(給料・家賃・減価償却費など)</em> ＝ <strong>営業利益</strong></li>
+                  <li>最终所有収益 － 所有費用 ＝ <strong>当期純利益</strong></li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+          <div class="flow-connector">⬇️ <strong>当期純利益</strong> 连线去 B/S！（加到 繰越利益剰余金） ⬇️</div>
+          <div class="flow-box" style="margin-bottom:0;">
+            <div class="flow-box-title">■ 貸借対照表 (B/S) ＝ 【一時点（決算日）】の【財政状態】</div>
+            <ul class="cheat-list">
+              <li><strong>資産（左・借方）</strong> ＝ <strong>負債（右・貸方）</strong> ＋ <strong>純資産（右・貸方）</strong></li>
+              <li><em>注意：前払～、未収～（去资产）；前受～、未払～、～引当金（去负债或资产抵减）。绝不进 P/L！</em></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cheat-block">
+          <h3>【4. 三大决算整理分录模板（推測補充）】</h3>
+          <ol class="cheat-list">
+            <li>
+              <strong>売上原価（し・くり・くり・し）</strong>：
+              <div class="journal-entry">（借）仕入 [期首] ／ （貸）繰越商品 [期首]<br>（借）繰越商品 [期末] ／ （貸）仕入 [期末]</div>
+            </li>
+            <li>
+              <strong>減価償却（定額法・間接法）</strong>：
+              <div class="journal-entry">（借）減価償却費 ☆☆ ／ （貸）減価償却累計額 ☆☆</div>
+            </li>
+            <li>
+              <strong>貸倒引当金（差額補充）</strong>：
+              <div class="journal-entry">（借）貸倒引当金繰入 ☆☆ ／ （貸）貸倒引当金 ☆☆</div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div>祝你期末考试顺利通关！如果复习中遇到笔记里看不懂的日语题目或特殊分录，随时复习巩固。加油（頑張ってください）！</div>
+    <div class="byline">by 哈基米</div>
+  </footer>
+
+  <button id="backTopBtn" class="back-top" type="button" aria-label="回到顶部">↑</button>
+
+  <script>
+    (function () {
+      // Theme toggle (respects system preference unless manually overridden)
+      var root = document.documentElement;
+      var themeBtn = document.getElementById("themeToggle");
+
+      function isDarkActive() {
+        var manual = root.getAttribute("data-theme");
+        if (manual === "dark") return true;
+        if (manual === "light") return false;
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      }
+
+      function updateThemeBtnLabel() {
+        themeBtn.textContent = isDarkActive() ? "☀️ 浅色" : "🌙 深色";
+      }
+
+      themeBtn.addEventListener("click", function () {
+        var next = isDarkActive() ? "light" : "dark";
+        root.setAttribute("data-theme", next);
+        updateThemeBtnLabel();
+      });
+
+      if (window.matchMedia) {
+        var mq = window.matchMedia("(prefers-color-scheme: dark)");
+        if (mq.addEventListener) {
+          mq.addEventListener("change", updateThemeBtnLabel);
+        }
+      }
+      updateThemeBtnLabel();
+
+      // Individual question answer toggles
+      var toggleButtons = document.querySelectorAll(".toggle-ans-btn");
+      toggleButtons.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var box = btn.nextElementSibling;
+          var expanded = btn.getAttribute("aria-expanded") === "true";
+          if (expanded) {
+            btn.setAttribute("aria-expanded", "false");
+            btn.textContent = "查看答案与解析";
+            box.classList.remove("open");
+          } else {
+            btn.setAttribute("aria-expanded", "true");
+            btn.textContent = "收起答案与解析";
+            box.classList.add("open");
+          }
+        });
+      });
+
+      // Expand All / Collapse All
+      var expandAllBtn = document.getElementById("expandAllBtn");
+      var collapseAllBtn = document.getElementById("collapseAllBtn");
+
+      expandAllBtn.addEventListener("click", function () {
+        toggleButtons.forEach(function (btn) {
+          btn.setAttribute("aria-expanded", "true");
+          btn.textContent = "收起答案与解析";
+          btn.nextElementSibling.classList.add("open");
+        });
+      });
+
+      collapseAllBtn.addEventListener("click", function () {
+        toggleButtons.forEach(function (btn) {
+          btn.setAttribute("aria-expanded", "false");
+          btn.textContent = "查看答案与解析";
+          btn.nextElementSibling.classList.remove("open");
+        });
+      });
+
+      // Back to top button
+      var backTopBtn = document.getElementById("backTopBtn");
+      window.addEventListener("scroll", function () {
+        if (window.scrollY > 360) {
+          backTopBtn.classList.add("visible");
+        } else {
+          backTopBtn.classList.remove("visible");
+        }
+      }, { passive: true });
+
+      backTopBtn.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    })();
+  </script>
+</body>
+</html>
