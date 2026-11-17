@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; media-src data: blob:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'"><meta name="robots" content="noindex, nofollow"><meta name="referrer" content="no-referrer">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>水产立论倒计时与散热防御台</title>
+<style>
+  :root {
+    --bg-deep: #061121;
+    --bg-card: #0b1c36;
+    --bg-inset: #071428;
+    --border: #1b4370;
+    --cyan: #22d3ee;
+    --cyan-dim: rgba(34, 211, 238, 0.16);
+    --coral: #ff6b4a;
+    --amber: #fbbf24;
+    --green: #34d399;
+    --text: #e2f1ff;
+    --muted: #7aa2cc;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    margin: 0;
+    padding: 12px 12px 28px;
+    background: radial-gradient(circle at 50% 0%, #0f294d 0%, var(--bg-deep) 68%);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+  }
+  .app {
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 4px 2px;
+  }
+  .title-wrap h1 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .subtitle {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+  .sound-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--cyan);
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cyan);
+  }
+  .badge {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    background: var(--cyan-dim);
+    border: 1px solid rgba(34, 211, 238, 0.35);
+    color: var(--cyan);
+  }
+  .badge.warn {
+    background: rgba(255, 107, 74, 0.18);
+    border-color: rgba(255, 107, 74, 0.5);
+    color: var(--coral);
+    animation: pulse 0.9s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+  }
+  /* Fish Tank */
+  .tank-wrap {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #1e4d82;
+    background: #041022;
+    cursor: pointer;
+  }
+  canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    image-rendering: pixelated;
+  }
+  .tank-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .mini-stat {
+    background: var(--bg-inset);
+    border: 1px solid rgba(27, 67, 112, 0.7);
+    border-radius: 8px;
+    padding: 7px 8px;
+    text-align: center;
+  }
+  .mini-stat .label {
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .mini-stat .val {
+    margin-top: 2px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+  }
+  /* Countdown & Outline */
+  .timer-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .timer-display {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 0 0 14px rgba(34, 211, 238, 0.3);
+  }
+  .preset-group {
+    display: flex;
+    gap: 5px;
+  }
+  .chip-btn {
+    background: var(--bg-inset);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    padding: 5px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .chip-btn.active {
+    border-color: var(--cyan);
+    color: var(--cyan);
+    background: var(--cyan-dim);
+  }
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+  .stage-name {
+    color: var(--amber);
+    font-weight: 600;
+  }
+  .bar-track {
+    width: 100%;
+    height: 12px;
+    background: var(--bg-inset);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    transition: width 0.3s ease, background 0.3s ease;
+    background: linear-gradient(90deg, #0ea5e9, #22d3ee);
+  }
+  .btn-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.2fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .btn {
+    border: 1px solid var(--border);
+    background: #102a4e;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 700;
+    padding: 9px 6px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.08s ease, filter 0.15s ease;
+  }
+  .btn:active {
+    transform: scale(0.96);
+  }
+  .btn.primary {
+    background: linear-gradient(135deg, #0284c7, #06b6d4);
+    border-color: #38bdf8;
+    color: #031526;
+  }
+  .btn.accent {
+    background: rgba(251, 191, 36, 0.16);
+    border-color: rgba(251, 191, 36, 0.5);
+    color: var(--amber);
+  }
+  /* Cooling Simulator */
+  .thermal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .thermal-box {
+    background: var(--bg-inset);
+    border: 1px solid rgba(27, 67, 112, 0.7);
+    border-radius: 8px;
+    padding: 8px 10px;
+  }
+  .thermal-val {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 2px;
+  }
+  .slider-wrap {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  input[type=range] {
+    width: 100%;
+    accent-color: var(--cyan);
+    cursor: pointer;
+  }
+  .pipe-anim {
+    height: 8px;
+    border-radius: 999px;
+    margin-top: 8px;
+    background: repeating-linear-gradient(
+      90deg,
+      rgba(34, 211, 238, 0.18) 0px,
+      rgba(34, 211, 238, 0.18) 12px,
+      rgba(34, 211, 238, 0.65) 12px,
+      rgba(34, 211, 238, 0.65) 20px
+    );
+    background-size: 40px 100%;
+    animation: flow 1.2s linear infinite;
+  }
+  @keyframes flow {
+    from { background-position: 0 0; }
+    to { background-position: 40px 0; }
+  }
+  /* Splash Counterattack */
+  .splash-btn {
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid #67e8f9;
+    background: linear-gradient(135deg, #0284c7 0%, #06b6d4 55%, #22d3ee 100%);
+    color: #04182b;
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(34, 211, 238, 0.35), inset 0 2px 0 rgba(255, 255, 255, 0.4);
+    transition: transform 0.08s ease, box-shadow 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .splash-btn:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: 0 2px 10px rgba(34, 211, 238, 0.3);
+  }
+  .log-box {
+    margin-top: 10px;
+    background: var(--bg-inset);
+    border: 1px solid rgba(27, 67, 112, 0.8);
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    min-height: 76px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .log-item {
+    color: var(--muted);
+    border-left: 2px solid var(--border);
+    padding-left: 7px;
+  }
+  .log-item:first-child {
+    color: #e0f7ff;
+    border-left-color: var(--cyan);
+    font-weight: 600;
+  }
+  .shake {
+    animation: shake 0.32s cubic-bezier(.36,.07,.19,.97) both;
+  }
+  @keyframes shake {
+    10%, 90% { transform: translate3d(-2px, 0, 0); }
+    20%, 80% { transform: translate3d(3px, -1px, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 1px, 0); }
+    40%, 60% { transform: translate3d(3px, 0, 0); }
+  }
+  .footer-sig {
+    text-align: right;
+    font-size: 11px;
+    color: rgba(122, 162, 204, 0.55);
+    padding: 2px 4px 0;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div class="app" id="appRoot">
+  <div class="header">
+    <div class="title-wrap">
+      <h1>🐟 水产立论工作台</h1>
+      <div class="subtitle">碳基偏水产生物专用 · 逻辑防御与散热监控</div>
+    </div>
+    <div class="header-right">
+      <button class="sound-btn" id="soundToggle">音效: 开</button>
+    </div>
+  </div>
+
+  <!-- 像素鱼与防御水花 -->
+  <div class="card">
+    <div class="card-head">
+      <span>🐠 活体观测缸 &amp; 防御水花</span>
+      <span class="badge" id="shieldBadge">护盾待机 · 点缸泼水</span>
+    </div>
+    <div class="tank-wrap" id="tankWrap">
+      <canvas id="tankCanvas" width="360" height="168"></canvas>
+    </div>
+    <div class="tank-stats">
+      <div class="mini-stat">
+        <div class="label">扑腾次数</div>
+        <div class="val" id="flopCountEl">0</div>
+      </div>
+      <div class="mini-stat">
+        <div class="label">防御水花</div>
+        <div class="val" id="defenseCountEl">0</div>
+      </div>
+      <div class="mini-stat">
+        <div class="label">水压状态</div>
+        <div class="val" id="pressureEl" style="color: var(--cyan);">稳定</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 立论大纲进度与倒计时 -->
+  <div class="card">
+    <div class="card-head">
+      <span>📝 水产立论大纲倒计时</span>
+      <span class="badge" id="timerStatusBadge">摸鱼待命中</span>
+    </div>
+    <div class="timer-row">
+      <div class="timer-display" id="timerDisplay">25:00</div>
+      <div class="preset-group">
+        <button class="chip-btn" data-min="5">5m</button>
+        <button class="chip-btn active" data-min="25">25m</button>
+        <button class="chip-btn" data-min="45">45m</button>
+      </div>
+    </div>
+    <div class="progress-meta">
+      <span class="stage-name" id="stageName">阶段一：吐泡泡找灵感</span>
+      <span id="progressPct" style="font-family: monospace; font-weight: 700;">12%</span>
+    </div>
+    <div class="bar-track">
+      <div class="bar-fill" id="outlineBar" style="width: 12%;"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn primary" id="startPauseBtn">开始立论</button>
+      <button class="btn" id="resetTimerBtn">重置</button>
+      <button class="btn accent" id="pushOutlineBtn">强行推进 +6%</button>
+    </div>
+  </div>
+
+  <!-- 硬件散热模拟器 -->
+  <div class="card">
+    <div class="card-head">
+      <span>❄️ 脑核硬件散热模拟器</span>
+      <span class="badge" id="thermalBadge">温度正常</span>
+    </div>
+    <div class="thermal-grid">
+      <div class="thermal-box">
+        <div class="label" style="font-size:11px; color:var(--muted);">碳基脑核温度</div>
+        <div class="thermal-val" id="tempDisplay" style="color: var(--green);">44.2°C</div>
+      </div>
+      <div class="thermal-box">
+        <div class="label" style="font-size:11px; color:var(--muted);">水冷泵转速 / 负载</div>
+        <div class="thermal-val" id="rpmDisplay" style="color: var(--cyan);">1850 RPM</div>
+      </div>
+    </div>
+    <div class="bar-track" style="height: 8px;">
+      <div class="bar-fill" id="tempBar" style="width: 35%;"></div>
+    </div>
+    <div class="pipe-anim" id="pipeAnim"></div>
+    <div class="slider-wrap">
+      <div class="slider-labels">
+        <span>散热挡位：<strong id="pumpModeText" style="color:var(--text);">2档 · 常规水冷循环</strong></span>
+        <span id="coolingPowerText">-1.1°C/s</span>
+      </div>
+      <input type="range" id="pumpSlider" min="1" max="3" step="1" value="2">
+    </div>
+  </div>
+
+  <!-- 水溅跃反击 -->
+  <div class="card">
+    <button class="splash-btn" id="splashAttackBtn">
+      <span>💦</span>
+      <span>水溅跃反击！</span>
+    </button>
+    <div class="log-box" id="logBox">
+      <div class="log-item">系统就绪：水产生物正在鱼缸里蓄力，随时准备拿大纲拍人。</div>
+    </div>
+  </div>
+
+  <div class="footer-sig">by 哈基米</div>
+</div>
+
+<script>
+(function() {
+  // --- Audio Synth (zero external files) ---
+  let soundEnabled = true;
+  let audioCtx = null;
+  const soundToggle = document.getElementById('soundToggle');
+  soundToggle.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    soundToggle.textContent = soundEnabled ? '音效: 开' : '音效: 关';
+  });
+
+  function playBeep(type) {
+    if (!soundEnabled) return;
+    try {
+      if (!audioCtx) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (AC) audioCtx = new AC();
+      }
+      if (!audioCtx) return;
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      if (type === 'splash') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(220, now);
+        osc.frequency.exponentialRampToValueAtTime(620, now + 0.09);
+        osc.frequency.exponentialRampToValueAtTime(160, now + 0.24);
+        gain.gain.setValueAtTime(0.16, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.25);
+      } else if (type === 'mini') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(380, now);
+        osc.frequency.exponentialRampToValueAtTime(580, now + 0.07);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.08);
+      } else {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.exponentialRampToValueAtTime(520, now + 0.05);
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + 0.06);
+      }
+    } catch (e) {}
+  }
+
+  // --- State ---
+  let flopCount = 0;
+  let defenseCount = 0;
+  let shieldTimer = 0;
+
+  let presetMinutes = 25;
+  let remainingSec = 25 * 60;
+  let timerRunning = false;
+  let outlinePct = 12;
+
+  let coreTemp = 44.2;
+  let pumpLevel = 2;
+  let recentSplashCooling = 0;
+
+  // --- DOM Refs ---
+  const appRoot = document.getElementById('appRoot');
+  const flopCountEl = document.getElementById('flopCountEl');
+  const defenseCountEl = document.getElementById('defenseCountEl');
+  const pressureEl = document.getElementById('pressureEl');
+  const shieldBadge = document.getElementById('shieldBadge');
+  const timerDisplay = document.getElementById('timerDisplay');
+  const timerStatusBadge = document.getElementById('timerStatusBadge');
+  const stageNameEl = document.getElementById('stageName');
+  const progressPctEl = document.getElementById('progressPct');
+  const outlineBar = document.getElementById('outlineBar');
+  const startPauseBtn = document.getElementById('startPauseBtn');
+  const resetTimerBtn = document.getElementById('resetTimerBtn');
+  const pushOutlineBtn = document.getElementById('pushOutlineBtn');
+  const tempDisplay = document.getElementById('tempDisplay');
+  const rpmDisplay = document.getElementById('rpmDisplay');
+  const tempBar = document.getElementById('tempBar');
+  const thermalBadge = document.getElementById('thermalBadge');
+  const pumpSlider = document.getElementById('pumpSlider');
+  const pumpModeText = document.getElementById('pumpModeText');
+  const coolingPowerText = document.getElementById('coolingPowerText');
+  const pipeAnim = document.getElementById('pipeAnim');
+  const splashAttackBtn = document.getElementById('splashAttackBtn');
+  const logBox = document.getElementById('logBox');
+  const tankWrap = document.getElementById('tankWrap');
+
+  function addLog(text) {
+    const item = document.createElement('div');
+    item.className = 'log-item';
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    const ss = String(now.getSeconds()).padStart(2, '0');
+    item.textContent = '[' + hh + ':' + mm + ':' + ss + '] ' + text;
+    logBox.insertBefore(item, logBox.firstChild);
+    while (logBox.children.length > 4) {
+      logBox.removeChild(logBox.lastChild);
+    }
+  }
+
+  // --- Pixel Fish Canvas ---
+  const canvas = document.getElementById('tankCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+  const WATER_Y = 114;
+
+  // 14x9 pixel fish matrices (frame 0 & frame 1)
+  const FISH_FRAMES = [
+    [
+      '00000166000000',
+      '00011122110000',
+      '00112224511001',
+      '10122224411111',
+      '11122333111110',
+      '10113333311111',
+      '00011333110001',
+      '00000111000000',
+      '00000030000000'
+    ],
+    [
+      '00000166000000',
+      '00011122110001',
+      '00112224511011',
+      '01122224411110',
+      '00122333111100',
+      '01113333311110',
+      '00011333110011',
+      '00000111000001',
+      '00000300000000'
+    ]
+  ];
+  const PALETTE = {
+    '1': '#ff6b4a',
+    '2': '#ff9e7d',
+    '3': '#ffe5d4',
+    '4': '#ffffff',
+    '5': '#08182e',
+    '6': '#fbbf24'
+  };
+
+  const fish = {
+    x: W * 0.5,
+    y: WATER_Y - 12,
+    vx: 1.5,
+    vy: 0,
+    facing: -1,
+    frame: 0,
+    frameTick: 0,
+    hopTimer: 35
+  };
+
+  const droplets = [];
+  const bubbles = [];
+  const waveRipples = [];
+
+  for (let i = 0; i < 12; i++) {
+    bubbles.push({
+      x: Math.random() * W,
+      y: WATER_Y + 8 + Math.random() * (H - WATER_Y - 12),
+      r: 1 + Math.floor(Math.random() * 2),
+      sp: 0.3 + Math.random() * 0.5
+    });
+  }
+
+  function spawnSplash(cx, cy, count, power) {
+    for (let i = 0; i < count; i++) {
+      const angle = -Math.PI * (0.1 + Math.random() * 0.8);
+      const speed = (1.8 + Math.random() * 3.8) * power;
+      droplets.push({
+        x: cx + (Math.random() - 0.5) * 24,
+        y: cy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        size: Math.random() > 0.4 ? 3 : 4,
+        color: Math.random() > 0.35 ? '#38bdf8' : '#e0f7ff',
+        life: 1.0
+      });
+    }
+    waveRipples.push({ x: cx, r: 4, maxR: 36 * power, alpha: 0.9 });
+  }
+
+  function drawPixelFish() {
+    const grid = FISH_FRAMES[fish.frame];
+    const pxSize = 4;
+    const fw = grid[0].length * pxSize;
+    const fh = grid.length * pxSize;
+    const startX = Math.round(fish.x - fw / 2);
+    const startY = Math.round(fish.y - fh / 2);
+    const cols = grid[0].length;
+
+    for (let r = 0; r < grid.length; r++) {
+      const rowStr = grid[r];
+      for (let c = 0; c < cols; c++) {
+        const ch = rowStr[c];
+        if (ch === '0') continue;
+        ctx.fillStyle = PALETTE[ch];
+        // Facing -1 is default (head on left), facing 1 mirrors pixel index without transforming canvas context
+        const drawCol = fish.facing < 0 ? c : (cols - 1 - c);
+        ctx.fillRect(startX + drawCol * pxSize, startY + r * pxSize, pxSize, pxSize);
+      }
+    }
+  }
+
+  function updateAndDrawTank() {
+    // Background gradient
+    const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+    bgGrad.addColorStop(0, '#041124');
+    bgGrad.addColorStop(0.65, '#072142');
+    bgGrad.addColorStop(1, '#082c56');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Subtle grid lines
+    ctx.strokeStyle = 'rgba(34, 211, 238, 0.06)';
+    ctx.lineWidth = 1;
+    for (let gx = 0; gx < W; gx += 24) {
+      ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+    }
+    for (let gy = 0; gy < H; gy += 24) {
+      ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(W, gy); ctx.stroke();
+    }
+
+    // Fish physics: constant flopping
+    fish.frameTick++;
+    if (fish.frameTick % 7 === 0) {
+      fish.frame = 1 - fish.frame;
+    }
+    fish.hopTimer--;
+    if (fish.hopTimer <= 0 && fish.y >= WATER_Y - 14) {
+      fish.vy = -(3.2 + Math.random() * 2.5);
+      fish.vx = (Math.random() > 0.5 ? 1 : -1) * (1.2 + Math.random() * 1.8);
+      fish.facing = fish.vx >= 0 ? 1 : -1;
+      fish.hopTimer = 26 + Math.floor(Math.random() * 34);
+      flopCount++;
+      flopCountEl.textContent = flopCount;
+      spawnSplash(fish.x, WATER_Y, 6, 0.7);
+    }
+
+    fish.vy += 0.24;
+    fish.x += fish.vx;
+    fish.y += fish.vy;
+
+    if (fish.x < 34) { fish.x = 34; fish.vx = Math.abs(fish.vx); fish.facing = 1; }
+    if (fish.x > W - 34) { fish.x = W - 34; fish.vx = -Math.abs(fish.vx); fish.facing = -1; }
+
+    if (fish.y > WATER_Y - 6) {
+      if (fish.vy > 2.2) {
+        spawnSplash(fish.x, WATER_Y, 9, 0.85);
+      }
+      fish.y = WATER_Y - 6;
+      fish.vy = 0;
+      fish.vx *= 0.88;
+    }
+
+    // Draw water body
+    ctx.fillStyle = 'rgba(14, 116, 144, 0.35)';
+    ctx.fillRect(0, WATER_Y, W, H - WATER_Y);
+
+    // Water surface line
+    ctx.fillStyle = '#22d3ee';
+    ctx.fillRect(0, WATER_Y, W, 2);
+
+    // Bubbles in water
+    ctx.fillStyle = 'rgba(186, 230, 253, 0.55)';
+    for (let i = 0; i < bubbles.length; i++) {
+      const b = bubbles[i];
+      b.y -= b.sp;
+      if (b.y < WATER_Y + 3) {
+        b.y = H - 6;
+        b.x = Math.random() * W;
+      }
+      ctx.fillRect(Math.round(b.x), Math.round(b.y), b.r * 2, b.r * 2);
+    }
+
+    // Defense Shield Ring
+    if (shieldTimer > 0) {
+      shieldTimer--;
+      ctx.save();
+      ctx.strokeStyle = 'rgba(34, 211, 238, ' + (0.35 + 0.35 * Math.sin(Date.now() * 0.015)) + ')';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(fish.x, fish.y, 34, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(34, 211, 238, 0.12)';
+      ctx.fill();
+      ctx.restore();
+
+      if (shieldTimer === 0) {
+        shieldBadge.textContent = '护盾待机 · 点缸泼水';
+        shieldBadge.classList.remove('warn');
+      }
+    }
+
+    // Draw pixel fish
+    drawPixelFish();
+
+    // Water ripples
+    for (let i = waveRipples.length - 1; i >= 0; i--) {
+      const rp = waveRipples[i];
+      rp.r += 1.4;
+      rp.alpha -= 0.04;
+      if (rp.alpha <= 0 || rp.r > rp.maxR) {
+        waveRipples.splice(i, 1);
+        continue;
+      }
+      ctx.strokeStyle = 'rgba(103, 232, 249, ' + rp.alpha + ')';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.ellipse(rp.x, WATER_Y + 2, rp.r, rp.r * 0.25, 0, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // Splash droplets
+    for (let i = droplets.length - 1; i >= 0; i--) {
+      const d = droplets[i];
+      d.vy += 0.22;
+      d.x += d.vx;
+      d.y += d.vy;
+      d.life -= 0.025;
+      if (d.life <= 0 || d.y > H) {
+        droplets.splice(i, 1);
+        continue;
+      }
+      ctx.fillStyle = d.color;
+      ctx.globalAlpha = Math.max(0, d.life);
+      ctx.fillRect(Math.round(d.x), Math.round(d.y), d.size, d.size);
+      ctx.globalAlpha = 1;
+    }
+
+    // Upright HUD text inside canvas
+    ctx.fillStyle = 'rgba(224, 247, 255, 0.78)';
+    ctx.font = 'bold 11px ui-monospace, Menlo, Consolas, monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(shieldTimer > 0 ? 'STATUS: 防御水花展开中' : 'STATUS: 像素鱼正常扑腾', 10, 18);
+
+    requestAnimationFrame(updateAndDrawTank);
+  }
+  requestAnimationFrame(updateAndDrawTank);
+
+  // Tap tank to splash & defend
+  tankWrap.addEventListener('click', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = W / rect.width;
+    const tapX = (e.clientX - rect.left) * scaleX;
+    defenseCount++;
+    defenseCountEl.textContent = defenseCount;
+    shieldTimer = 110;
+    shieldBadge.textContent = '防御水花展开中!';
+    recentSplashCooling += 1.2;
+    fish.vy = -4.2;
+    fish.vx = (fish.x < tapX ? -1 : 1) * 2.2;
+    fish.facing = fish.vx >= 0 ? 1 : -1;
+    spawnSplash(tapX, WATER_Y, 14, 1.0);
+    playBeep('mini');
+  });
+
+  // --- Thesis Countdown & Progress ---
+  function updateTimerUI() {
+    const m = Math.floor(remainingSec / 60);
+    const s = remainingSec % 60;
+    timerDisplay.textContent = String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+
+    let stage = '阶段一：吐泡泡找灵感';
+    if (outlinePct >= 100) stage = '大纲完成：碳基水产完全体！';
+    else if (outlinePct >= 80) stage = '阶段四：准备拿大纲拍人';
+    else if (outlinePct >= 50) stage = '阶段三：疯狂打补丁防杠';
+    else if (outlinePct >= 20) stage = '阶段二：强行搭建水产逻辑';
+
+    stageNameEl.textContent = stage;
+    progressPctEl.textContent = Math.round(outlinePct) + '%';
+    outlineBar.style.width = Math.min(100, outlinePct) + '%';
+    if (outlinePct >= 100) {
+      outlineBar.style.background = 'linear-gradient(90deg, #10b981, #34d399)';
+    } else {
+      outlineBar.style.background = 'linear-gradient(90deg, #0ea5e9, #22d3ee)';
+    }
+  }
+
+  document.querySelectorAll('.chip-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.chip-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      presetMinutes = Number(btn.getAttribute('data-min'));
+      remainingSec = presetMinutes * 60;
+      timerRunning = false;
+      startPauseBtn.textContent = '开始立论';
+      timerStatusBadge.textContent = '摸鱼待命中';
+      playBeep('tick');
+      updateTimerUI();
+    });
+  });
+
+  startPauseBtn.addEventListener('click', () => {
+    timerRunning = !timerRunning;
+    startPauseBtn.textContent = timerRunning ? '暂停立论' : '继续立论';
+    timerStatusBadge.textContent = timerRunning ? '疯狂输出大纲中' : '已暂停摸鱼';
+    playBeep('tick');
+    if (timerRunning) {
+      addLog('立论倒计时启动，脑核开始加速发热。');
+    }
+  });
+
+  resetTimerBtn.addEventListener('click', () => {
+    timerRunning = false;
+    remainingSec = presetMinutes * 60;
+    outlinePct = 10;
+    startPauseBtn.textContent = '开始立论';
+    timerStatusBadge.textContent = '摸鱼待命中';
+    playBeep('tick');
+    updateTimerUI();
+  });
+
+  pushOutlineBtn.addEventListener('click', () => {
+    outlinePct = Math.min(100, outlinePct + 6);
+    coreTemp = Math.min(99, coreTemp + 4.8);
+    fish.vy = -4.5;
+    flopCount++;
+    flopCountEl.textContent = flopCount;
+    spawnSplash(fish.x, WATER_Y, 10, 0.9);
+    playBeep('tick');
+    updateTimerUI();
+    updateThermalUI();
+    if (outlinePct >= 100) {
+      addLog('立论大纲已满格！快去群里拍人吧。');
+    } else {
+      addLog('强行推进大纲 +6%，脑核温度飙升了！');
+    }
+  });
+
+  // --- Hardware Cooling Simulator ---
+  const PUMP_MODES = {
+    1: { text: '1档 · 摸鱼微风循环', cool: 0.45, rpm: 1100, speed: '2.2s' },
+    2: { text: '2档 · 常规水冷循环', cool: 1.05, rpm: 1850, speed: '1.1s' },
+    3: { text: '3档 · 狂暴泄洪泼水', cool: 1.85, rpm: 3200, speed: '0.45s' }
+  };
+
+  function updateThermalUI() {
+    const mode = PUMP_MODES[pumpLevel];
+    pumpModeText.textContent = mode.text;
+    coolingPowerText.textContent = '-' + mode.cool.toFixed(1) + '°C/s';
+    pipeAnim.style.animationDuration = mode.speed;
+
+    const dynamicRpm = Math.round(mode.rpm + (coreTemp - 40) * 14 + (timerRunning ? 220 : 0));
+    rpmDisplay.textContent = dynamicRpm + ' RPM';
+    tempDisplay.textContent = coreTemp.toFixed(1) + '°C';
+
+    const pct = Math.max(8, Math.min(100, ((coreTemp - 30) / 70) * 100));
+    tempBar.style.width = pct + '%';
+
+    if (coreTemp >= 82) {
+      tempDisplay.style.color = 'var(--coral)';
+      tempBar.style.background = 'linear-gradient(90deg, #f59e0b, #ef4444)';
+      thermalBadge.textContent = '过热警告 · 快水溅跃降温';
+      thermalBadge.classList.add('warn');
+      pressureEl.textContent = '沸腾!';
+      pressureEl.style.color = 'var(--coral)';
+    } else if (coreTemp >= 64) {
+      tempDisplay.style.color = 'var(--amber)';
+      tempBar.style.background = 'linear-gradient(90deg, #22d3ee, #fbbf24)';
+      thermalBadge.textContent = '温热输出中';
+      thermalBadge.classList.remove('warn');
+      pressureEl.textContent = '偏高';
+      pressureEl.style.color = 'var(--amber)';
+    } else {
+      tempDisplay.style.color = 'var(--green)';
+      tempBar.style.background = 'linear-gradient(90deg, #10b981, #22d3ee)';
+      thermalBadge.textContent = '温度正常';
+      thermalBadge.classList.remove('warn');
+      pressureEl.textContent = '稳定';
+      pressureEl.style.color = 'var(--cyan)';
+    }
+  }
+
+  pumpSlider.addEventListener('input', (e) => {
+    pumpLevel = Number(e.target.value);
+    updateThermalUI();
+  });
+
+  // Main 1-second simulation loop
+  setInterval(() => {
+    if (timerRunning && remainingSec > 0) {
+      remainingSec--;
+      const step = 100 / (presetMinutes * 60); // natural progress along countdown
+      outlinePct = Math.min(100, outlinePct + step * 0.9);
+      if (remainingSec === 0) {
+        timerRunning = false;
+        startPauseBtn.textContent = '开始立论';
+        timerStatusBadge.textContent = '时间到 · 出水!';
+        addLog('倒计时结束！请立刻端着水产大纲进群输出。');
+        playBeep('splash');
+      }
+      updateTimerUI();
+    }
+
+    // Thermal simulation
+    const heatGen = (timerRunning ? 1.25 : 0.45) + (outlinePct >= 80 ? 0.35 : 0) + Math.random() * 0.25;
+    const coolPower = PUMP_MODES[pumpLevel].cool + recentSplashCooling;
+    recentSplashCooling = Math.max(0, recentSplashCooling * 0.45);
+    coreTemp = Math.max(34.0, Math.min(99.5, coreTemp + heatGen - coolPower));
+    updateThermalUI();
+  }, 1000);
+
+  // --- Splash Counterattack Button ---
+  const SPLASH_LINES = [
+    '使出了「水溅跃」！什么都没有发生……才怪，溅了对方一键盘水。',
+    '防御水花全开！成功格挡了一次「你这前提不成立」的偷袭。',
+    '水压暴走！强行把大纲自洽度往前拍了 2%，顺便给脑核降了个温。',
+    '鱼尾狂甩！在屏幕前发出震耳欲聋的扑腾声（物理）。',
+    '暴击！水溅跃精准拍脸，对面陷入了「这怎么接」的沉默。',
+    '散热水花四溅！差点烧成水煮鱼，还好及时泼了一瓢凉水。'
+  ];
+
+  splashAttackBtn.addEventListener('click', () => {
+    // Mega jump & splash
+    fish.vy = -7.6;
+    fish.vx = (Math.random() > 0.5 ? 1 : -1) * 3.0;
+    fish.facing = fish.vx >= 0 ? 1 : -1;
+    flopCount += 2;
+    defenseCount += 3;
+    flopCountEl.textContent = flopCount;
+    defenseCountEl.textContent = defenseCount;
+
+    shieldTimer = 180;
+    shieldBadge.textContent = '水溅跃反击护盾中!';
+    spawnSplash(fish.x, WATER_Y, 32, 1.45);
+
+    // Cool down hardware
+    const drop = 4.5 + Math.random() * 3.5;
+    coreTemp = Math.max(34.0, coreTemp - drop);
+    recentSplashCooling += 2.0;
+
+    // Slight chance to nudge outline
+    if (outlinePct < 100) {
+      outlinePct = Math.min(100, outlinePct + 2);
+      updateTimerUI();
+    }
+    updateThermalUI();
+
+    // Screen shake
+    appRoot.classList.remove('shake');
+    void appRoot.offsetWidth;
+    appRoot.classList.add('shake');
+
+    playBeep('splash');
+    const msg = SPLASH_LINES[Math.floor(Math.random() * SPLASH_LINES.length)];
+    addLog(msg + ' (降温 -' + drop.toFixed(1) + '°C)');
+  });
+
+  updateTimerUI();
+  updateThermalUI();
+})();
+</script>
+</body>
+</html>
