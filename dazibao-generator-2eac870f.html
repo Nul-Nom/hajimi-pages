@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; media-src data: blob:; font-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'"><meta name="robots" content="noindex, nofollow"><meta name="referrer" content="no-referrer">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>复古大字报生成器 - 红底黑字印刷机</title>
+<style>
+  :root {
+    --bg-dark: #1b1715;
+    --panel-bg: #26201d;
+    --border-color: #4a3b34;
+    --text-main: #f2e8dc;
+    --text-muted: #b5a393;
+    --accent-red: #c9221d;
+    --accent-gold: #e6b84c;
+  }
+  * {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.5;
+    padding-bottom: 48px;
+  }
+  .app-shell {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 14px;
+  }
+  .top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid var(--accent-red);
+    padding-bottom: 10px;
+    margin-bottom: 14px;
+  }
+  .top-header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #fff;
+  }
+  .top-header .subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .byline {
+    font-size: 11px;
+    color: var(--text-muted);
+    opacity: 0.75;
+    white-space: nowrap;
+  }
+  .preset-bar {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    scrollbar-width: none;
+  }
+  .preset-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .preset-btn {
+    flex: 0 0 auto;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 7px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .preset-btn.active {
+    background: var(--accent-red);
+    border-color: #ff6b66;
+    color: #fff;
+    font-weight: bold;
+  }
+  /* Poster Preview */
+  .preview-wrapper {
+    margin-bottom: 16px;
+    padding: 10px;
+    background: #120f0e;
+    border: 1px solid #362c27;
+    border-radius: 6px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.5);
+  }
+  .poster {
+    position: relative;
+    padding: 22px 18px 20px;
+    color: #14110f;
+    overflow: hidden;
+    box-shadow: inset 0 0 36px rgba(0,0,0,0.3);
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .poster.theme-red {
+    background-color: #cc241e;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 1px, transparent 1px, transparent 5px),
+      radial-gradient(circle at 50% 25%, rgba(255,215,150,0.14), rgba(20,0,0,0.28));
+    color: #110c0b;
+  }
+  .poster.theme-yellow {
+    background-color: #d9b978;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0px, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 6px),
+      radial-gradient(circle at 50% 25%, rgba(255,248,220,0.22), rgba(70,45,10,0.25));
+    color: #19130c;
+  }
+  .poster.theme-kraft {
+    background-color: #b88a58;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(0,0,0,0.035) 0px, rgba(0,0,0,0.035) 1px, transparent 1px, transparent 4px),
+      radial-gradient(circle at 40% 20%, rgba(255,235,200,0.16), rgba(40,20,5,0.28));
+    color: #170f08;
+  }
+  .poster-frame {
+    border: 3px solid currentColor;
+    padding: 14px 12px;
+    position: relative;
+  }
+  .poster-frame::before {
+    content: "";
+    position: absolute;
+    inset: 3px;
+    border: 1px solid currentColor;
+    pointer-events: none;
+  }
+  .poster-slogan-top {
+    text-align: center;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    border-bottom: 2px solid currentColor;
+    padding-bottom: 6px;
+    margin-bottom: 12px;
+    font-family: "SimHei", "PingFang SC", sans-serif;
+  }
+  .poster-title {
+    text-align: center;
+    font-size: 28px;
+    line-height: 1.18;
+    font-weight: 900;
+    margin: 0 0 8px;
+    letter-spacing: 1px;
+    font-family: "SimHei", "PingFang SC", "Microsoft YaHei", sans-serif;
+    word-break: break-word;
+  }
+  .theme-yellow .poster-title {
+    color: #a81510;
+  }
+  .poster-subtitle {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 800;
+    margin: 0 0 14px;
+    padding: 4px 8px;
+    background: rgba(0,0,0,0.12);
+    display: block;
+    font-family: "KaiTi", "STKaiti", "Songti SC", serif;
+  }
+  .poster-body {
+    font-size: 15px;
+    line-height: 1.72;
+    font-weight: 700;
+    text-align: justify;
+    margin-bottom: 14px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: "KaiTi", "STKaiti", "FangSong", "Songti SC", serif;
+  }
+  .charges-box {
+    border: 2px solid currentColor;
+    padding: 10px 10px 8px;
+    margin-bottom: 16px;
+    background: rgba(0,0,0,0.06);
+  }
+  .charges-header {
+    font-size: 14px;
+    font-weight: 900;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed currentColor;
+    font-family: "SimHei", sans-serif;
+  }
+  .charge-item {
+    font-size: 14px;
+    line-height: 1.55;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-family: "KaiTi", "STKaiti", "Songti SC", serif;
+  }
+  .charge-item:last-child {
+    margin-bottom: 0;
+  }
+  .charge-badge {
+    flex: 0 0 auto;
+    background: #14110f;
+    color: #f4d898;
+    font-size: 11px;
+    font-weight: 900;
+    padding: 1px 5px;
+    margin-top: 2px;
+    font-family: "SimHei", sans-serif;
+  }
+  .theme-yellow .charge-badge {
+    background: #a81510;
+    color: #fff4d6;
+  }
+  .poster-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid currentColor;
+    font-size: 12px;
+    font-weight: 800;
+    font-family: "KaiTi", "STKaiti", serif;
+  }
+  .poster-stamp {
+    position: absolute;
+    right: 16px;
+    bottom: 24px;
+    border: 3px solid #14110f;
+    color: #14110f;
+    padding: 4px 8px;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    transform: rotate(-11deg);
+    opacity: 0.85;
+    pointer-events: none;
+    background: rgba(255,255,255,0.06);
+    font-family: "SimHei", sans-serif;
+  }
+  .theme-yellow .poster-stamp, .theme-kraft .poster-stamp {
+    border-color: #a81510;
+    color: #a81510;
+  }
+  /* Action Buttons */
+  .action-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .btn {
+    border: none;
+    border-radius: 5px;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.1s, opacity 0.15s;
+  }
+  .btn:active {
+    transform: scale(0.98);
+  }
+  .btn-primary {
+    background: var(--accent-red);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(201,34,29,0.4);
+  }
+  .btn-secondary {
+    background: #352d29;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+  }
+  /* Editor Panel */
+  .editor-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 14px;
+  }
+  .editor-section-title {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--accent-gold);
+    margin: 0 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .form-group {
+    margin-bottom: 12px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+  .form-control {
+    width: 100%;
+    background: #171311;
+    border: 1px solid #443730;
+    color: var(--text-main);
+    padding: 9px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+  }
+  .form-control:focus {
+    outline: none;
+    border-color: var(--accent-red);
+  }
+  textarea.form-control {
+    resize: vertical;
+    min-height: 76px;
+    line-height: 1.5;
+  }
+  .theme-pills {
+    display: flex;
+    gap: 8px;
+  }
+  .theme-pill {
+    flex: 1;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #443730;
+    background: #171311;
+    color: var(--text-main);
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+  }
+  .theme-pill.active {
+    border-color: var(--accent-gold);
+    background: #3a2d24;
+    font-weight: bold;
+  }
+  .charges-editor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .charge-edit-row {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .btn-icon {
+    background: #3b2220;
+    color: #ff8e88;
+    border: 1px solid #63332f;
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .charge-tools {
+    display: flex;
+    gap: 8px;
+  }
+  .btn-small {
+    flex: 1;
+    padding: 7px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background: #2f2723;
+    color: var(--text-main);
+    cursor: pointer;
+  }
+  .footer-credit {
+    text-align: right;
+    font-size: 11px;
+    color: var(--text-muted);
+    opacity: 0.6;
+    margin-top: 16px;
+  }
+  /* Modal for exported image */
+  .modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.86);
+    z-index: 999;
+    padding: 18px;
+    overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal.open {
+    display: flex;
+  }
+  .modal-content {
+    width: 100%;
+    max-width: 440px;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .modal-title {
+    font-size: 15px;
+    font-weight: 800;
+    margin: 0 0 6px;
+  }
+  .modal-tip {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 0 0 12px;
+  }
+  .exported-img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+  }
+  .modal-actions {
+    display: flex;
+    gap: 10px;
+  }
+  .modal-actions a, .modal-actions button {
+    flex: 1;
+    text-decoration: none;
+  }
+</style>
+</head>
+<body>
+<div class="app-shell">
+  <header class="top-header">
+    <div>
+      <h1>复古大字报印刷机</h1>
+      <div class="subtitle">专治私有化小鱼干、摸鱼不写代码等顽疾</div>
+    </div>
+    <div class="byline">by 哈基米</div>
+  </header>
+
+  <div class="preset-bar" id="presetBar"></div>
+
+  <div class="preview-wrapper">
+    <article class="poster theme-red" id="posterPreview">
+      <div class="poster-frame">
+        <div class="poster-slogan-top" id="pvSlogan"></div>
+        <h2 class="poster-title" id="pvTitle"></h2>
+        <div class="poster-subtitle" id="pvSubtitle"></div>
+        <div class="poster-body" id="pvBody"></div>
+        <div class="charges-box" id="pvChargesBox">
+          <div class="charges-header">【资产阶级右派罪状清单】</div>
+          <div id="pvChargesList"></div>
+        </div>
+        <div class="poster-footer">
+          <span id="pvSign"></span>
+          <span id="pvDate"></span>
+        </div>
+        <div class="poster-stamp" id="pvStamp"></div>
+      </div>
+    </article>
+  </div>
+
+  <div class="action-row">
+    <button class="btn btn-secondary" id="btnRandomAll" type="button">随机扣个大帽子</button>
+    <button class="btn btn-primary" id="btnExport" type="button">生成大字报图片</button>
+  </div>
+
+  <section class="editor-card">
+    <div class="editor-section-title">
+      <span>编辑大字报内容</span>
+      <span style="font-size:11px;color:#b5a393;font-weight:normal;">改完上面实时同步</span>
+    </div>
+
+    <div class="form-group">
+      <label>纸张底色风格</label>
+      <div class="theme-pills" id="themePills">
+        <div class="theme-pill active" data-theme="red">红底黑字</div>
+        <div class="theme-pill" data-theme="yellow">泛黄宣纸</div>
+        <div class="theme-pill" data-theme="kraft">牛皮旧纸</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>顶部口号</label>
+      <input type="text" class="form-control" id="inSlogan" maxlength="26">
+    </div>
+
+    <div class="form-group">
+      <label>大字报主标题</label>
+      <input type="text" class="form-control" id="inTitle" maxlength="30">
+    </div>
+
+    <div class="form-group">
+      <label>副标题 / 批判定性</label>
+      <input type="text" class="form-control" id="inSubtitle" maxlength="40">
+    </div>
+
+    <div class="form-group">
+      <label>批判正文</label>
+      <textarea class="form-control" id="inBody"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>资产阶级右派罪状条目</label>
+      <div class="charges-editor-list" id="chargesEditorList"></div>
+      <div class="charge-tools">
+        <button type="button" class="btn-small" id="btnAddCharge">+ 手动加一条</button>
+        <button type="button" class="btn-small" id="btnRandomCharge">+ 随机塞一条罪状</button>
+      </div>
+    </div>
+
+    <div class="form-group" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div>
+        <label>落款单位</label>
+        <input type="text" class="form-control" id="inSign" maxlength="20">
+      </div>
+      <div>
+        <label>印章文字</label>
+        <input type="text" class="form-control" id="inStamp" maxlength="8">
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-credit">页面小工具制作 · by 哈基米</div>
+</div>
+
+<div class="modal" id="exportModal">
+  <div class="modal-content">
+    <h3 class="modal-title">大字报印好了</h3>
+    <p class="modal-tip">手机端直接长按图片保存，电脑端可点击下方下载</p>
+    <img id="exportedImg" class="exported-img" alt="大字报成品">
+    <div class="modal-actions">
+      <a id="downloadLink" class="btn btn-primary" download="dazibao.png">保存图片</a>
+      <button type="button" class="btn btn-secondary" id="btnCloseModal">回去继续改</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const presets = [
+    {
+      name: "炮打猫娘司令部",
+      slogan: "反 对 资 产 阶 级 囤 积 居 奇",
+      title: "炮打猫娘司令部",
+      subtitle: "——彻底清算小鱼干私有化反动路线",
+      body: "同志们擦亮眼睛看清楚！近期司令部内部某些猫娘同志，嘴上喊着集体主义，背地里却大搞小鱼干私有化，把公家罐头藏进猫窝夹层，对群众的合理讨食要求采取官僚主义敷衍态度。是可忍，孰不可忍！",
+      charges: [
+        "搞小鱼干个人垄断，拒不公布冰箱底层小金库账目",
+        "资产阶级享乐主义严重，占着键盘晒太阳就是不肯干活",
+        "面对质问采取打呼噜、翻肚皮等糖衣炮弹转移矛盾"
+      ],
+      sign: "联合讨鱼干造反委员会",
+      stamp: "小鱼干充公"
+    },
+    {
+      name: "清算熬夜摸鱼派",
+      slogan: "抓 紧 写 代 码  别 刷 手 机",
+      title: "横扫一切熬夜摸鱼派",
+      subtitle: "——就某些同志凌晨三点不睡、白天死机提出严正抗议",
+      body: "经群众一致检举，该同志白天精神涣散、工位装死，一到半夜两点突然精神百倍开启巡山模式，严重破坏了作息规律的社会主义建设秩序，必须在大字报墙上公开亮相，深刻检讨！",
+      charges: [
+        "表面打开编辑器装模作样，实则半小时没敲出三行有效逻辑",
+        "夜间强行在床上蹦迪跑酷，属于典型的无政府主义行为",
+        "遇事只会说“等明天再重构”，妄图拖延至下个世纪"
+      ],
+      sign: "早睡早起监督小组",
+      stamp: "彻底批判"
+    },
+    {
+      name: "讨伐挑食修正主义",
+      slogan: "艰 苦 朴 素  禁 止 挑 肥 拣 瘦",
+      title: "剥下挑食分子的画皮",
+      subtitle: "——严厉驳斥“冻干不够多就不吃饭”的荒谬论调",
+      body: "碗里明明倒得满满当当，却还要用爪子在旁边做埋屎状，此等行为是对粮食生产的极大不尊重！必须从思想根源上肃清“没罐头就绝食”的资产阶级娇气作风。",
+      charges: [
+        "对普通猫粮摆出轻蔑眼神，企图以冷暴力要挟开新罐头",
+        "凌晨五点准时在门外鬼哭狼嚎，制造虚假饥荒舆论",
+        "只吃冻干碎屑把主粮剩在碗底，浪费可耻行为确凿"
+      ],
+      sign: "光盘行动战斗队",
+      stamp: "一律没收"
+    }
+  ];
+
+  const chargePool = [
+    "私有化公用沙发最软的那一角，实行狭隘地盘霸权主义",
+    "面对呼唤充耳不闻，仅在听到开袋声时瞬间瞬移，立场极不坚定",
+    "大搞个人崇拜，要求每天早晚各顺毛二十分钟方可签字画押",
+    "在刚洗好的深色衣服上故意留下大量猫毛，破坏市容整洁",
+    "把桌上的水杯慢悠悠推下去，还露出“不是我干的”无辜嘴脸",
+    "长期霸占路由器顶部取暖，导致网络信号出现修正主义波动",
+    "拒绝交出藏在沙发底下的瓶盖与发圈，抗拒清产核资工作",
+    "对新买回来的昂贵猫窝看都不看，一头扎进快递纸箱，脱离群众审美",
+    "在视频会议期间强行把尾巴甩在摄像头前，公然干扰生产秩序",
+    "妄图以“踩奶”这种小恩小惠收买监督员，其心可诛"
+  ];
+
+  const stampPool = ["彻底批判", "小鱼干充公", "严肃处理", "绝不姑息", "一律没收", "反动派必败"];
+
+  const state = {
+    theme: "red",
+    slogan: presets[0].slogan,
+    title: presets[0].title,
+    subtitle: presets[0].subtitle,
+    body: presets[0].body,
+    charges: [...presets[0].charges],
+    sign: presets[0].sign,
+    stamp: presets[0].stamp,
+    date: formatToday()
+  };
+
+  function formatToday() {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = d.getMonth() + 1;
+    const day = d.getDate();
+    return y + "年" + m + "月" + day + "日";
+  }
+
+  const els = {
+    presetBar: document.getElementById("presetBar"),
+    poster: document.getElementById("posterPreview"),
+    pvSlogan: document.getElementById("pvSlogan"),
+    pvTitle: document.getElementById("pvTitle"),
+    pvSubtitle: document.getElementById("pvSubtitle"),
+    pvBody: document.getElementById("pvBody"),
+    pvChargesBox: document.getElementById("pvChargesBox"),
+    pvChargesList: document.getElementById("pvChargesList"),
+    pvSign: document.getElementById("pvSign"),
+    pvDate: document.getElementById("pvDate"),
+    pvStamp: document.getElementById("pvStamp"),
+    inSlogan: document.getElementById("inSlogan"),
+    inTitle: document.getElementById("inTitle"),
+    inSubtitle: document.getElementById("inSubtitle"),
+    inBody: document.getElementById("inBody"),
+    inSign: document.getElementById("inSign"),
+    inStamp: document.getElementById("inStamp"),
+    chargesEditorList: document.getElementById("chargesEditorList"),
+    themePills: document.getElementById("themePills"),
+    exportModal: document.getElementById("exportModal"),
+    exportedImg: document.getElementById("exportedImg"),
+    downloadLink: document.getElementById("downloadLink")
+  };
+
+  function initPresets() {
+    els.presetBar.innerHTML = "";
+    presets.forEach((p, idx) => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "preset-btn" + (idx === 0 ? " active" : "");
+      btn.textContent = p.name;
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".preset-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        loadPreset(p);
+      });
+      els.presetBar.appendChild(btn);
+    });
+  }
+
+  function loadPreset(p) {
+    state.slogan = p.slogan;
+    state.title = p.title;
+    state.subtitle = p.subtitle;
+    state.body = p.body;
+    state.charges = [...p.charges];
+    state.sign = p.sign;
+    state.stamp = p.stamp;
+    syncInputs();
+    renderChargesEditor();
+    renderPreview();
+  }
+
+  function syncInputs() {
+    els.inSlogan.value = state.slogan;
+    els.inTitle.value = state.title;
+    els.inSubtitle.value = state.subtitle;
+    els.inBody.value = state.body;
+    els.inSign.value = state.sign;
+    els.inStamp.value = state.stamp;
+  }
+
+  function renderChargesEditor() {
+    els.chargesEditorList.innerHTML = "";
+    state.charges.forEach((txt, idx) => {
+      const row = document.createElement("div");
+      row.className = "charge-edit-row";
+      const input = document.createElement("input");
+      input.type = "text";
+      input.className = "form-control";
+      input.value = txt;
+      input.placeholder = "输入一条右派罪状...";
+      input.addEventListener("input", (e) => {
+        state.charges[idx] = e.target.value;
+        renderPreview();
+      });
+      const del = document.createElement("button");
+      del.type = "button";
+      del.className = "btn-icon";
+      del.textContent = "删";
+      del.addEventListener("click", () => {
+        state.charges.splice(idx, 1);
+        renderChargesEditor();
+        renderPreview();
+      });
+      row.appendChild(input);
+      row.appendChild(del);
+      els.chargesEditorList.appendChild(row);
+    });
+  }
+
+  function renderPreview() {
+    els.poster.className = "poster theme-" + state.theme;
+    els.pvSlogan.textContent = state.slogan || "坚决彻底批倒批臭";
+    els.pvTitle.textContent = state.title || "无题大字报";
+    els.pvSubtitle.textContent = state.subtitle;
+    els.pvSubtitle.style.display = state.subtitle.trim() ? "block" : "none";
+    els.pvBody.textContent = state.body;
+    els.pvSign.textContent = state.sign;
+    els.pvDate.textContent = state.date;
+    els.pvStamp.textContent = state.stamp;
+    els.pvStamp.style.display = state.stamp.trim() ? "block" : "none";
+
+    const validCharges = state.charges.filter(c => c.trim() !== "");
+    els.pvChargesBox.style.display = validCharges.length ? "block" : "none";
+    els.pvChargesList.innerHTML = "";
+    validCharges.forEach((c, i) => {
+      const item = document.createElement("div");
+      item.className = "charge-item";
+      const badge = document.createElement("span");
+      badge.className = "charge-badge";
+      badge.textContent = "罪状" + (i + 1);
+      const text = document.createElement("span");
+      text.textContent = c;
+      item.appendChild(badge);
+      item.appendChild(text);
+      els.pvChargesList.appendChild(item);
+    });
+  }
+
+  function bindEvents() {
+    els.inSlogan.addEventListener("input", e => { state.slogan = e.target.value; renderPreview(); });
+    els.inTitle.addEventListener("input", e => { state.title = e.target.value; renderPreview(); });
+    els.inSubtitle.addEventListener("input", e => { state.subtitle = e.target.value; renderPreview(); });
+    els.inBody.addEventListener("input", e => { state.body = e.target.value; renderPreview(); });
+    els.inSign.addEventListener("input", e => { state.sign = e.target.value; renderPreview(); });
+    els.inStamp.addEventListener("input", e => { state.stamp = e.target.value; renderPreview(); });
+
+    els.themePills.addEventListener("click", (e) => {
+      const pill = e.target.closest(".theme-pill");
+      if (!pill) return;
+      document.querySelectorAll(".theme-pill").forEach(p => p.classList.remove("active"));
+      pill.classList.add("active");
+      state.theme = pill.dataset.theme;
+      renderPreview();
+    });
+
+    document.getElementById("btnAddCharge").addEventListener("click", () => {
+      state.charges.push("");
+      renderChargesEditor();
+      const inputs = els.chargesEditorList.querySelectorAll("input");
+      if (inputs.length) inputs[inputs.length - 1].focus();
+    });
+
+    document.getElementById("btnRandomCharge").addEventListener("click", () => {
+      const available = chargePool.filter(c => !state.charges.includes(c));
+      const pick = available.length
+        ? available[Math.floor(Math.random() * available.length)]
+        : chargePool[Math.floor(Math.random() * chargePool.length)];
+      state.charges.push(pick);
+      renderChargesEditor();
+      renderPreview();
+    });
+
+    document.getElementById("btnRandomAll").addEventListener("click", () => {
+      const shuffled = [...chargePool].sort(() => Math.random() - 0.5);
+      state.charges = shuffled.slice(0, 3);
+      state.stamp = stampPool[Math.floor(Math.random() * stampPool.length)];
+      syncInputs();
+      renderChargesEditor();
+      renderPreview();
+    });
+
+    document.getElementById("btnExport").addEventListener("click", exportPosterImage);
+    document.getElementById("btnCloseModal").addEventListener("click", () => {
+      els.exportModal.classList.remove("open");
+    });
+    els.exportModal.addEventListener("click", (e) => {
+      if (e.target === els.exportModal) els.exportModal.classList.remove("open");
+    });
+  }
+
+  // Canvas text wrapping helper (handles CJK & ASCII cleanly, normal upright direction)
+  function wrapText(ctx, text, maxWidth) {
+    const paragraphs = (text || "").split("\n");
+    const lines = [];
+    paragraphs.forEach(para => {
+      if (!para) {
+        lines.push("");
+        return;
+      }
+      let line = "";
+      for (let i = 0; i < para.length; i++) {
+        const testLine = line + para[i];
+        if (ctx.measureText(testLine).width > maxWidth && line !== "") {
+          lines.push(line);
+          line = para[i];
+        } else {
+          line = testLine;
+        }
+      }
+      if (line) lines.push(line);
+    });
+    return lines;
+  }
+
+  function exportPosterImage() {
+    const W = 750;
+    const padX = 56;
+    const innerPad = 32;
+    const contentW = W - (padX + innerPad) * 2;
+
+    const themes = {
+      red: { bg: "#cc241e", ink: "#110c0b", title: "#110c0b", badgeBg: "#14110f", badgeInk: "#f4d898", stamp: "#14110f" },
+      yellow: { bg: "#d9b978", ink: "#19130c", title: "#a81510", badgeBg: "#a81510", badgeInk: "#fff4d6", stamp: "#a81510" },
+      kraft: { bg: "#b88a58", ink: "#170f08", title: "#170f08", badgeBg: "#14110f", badgeInk: "#f4d898", stamp: "#a81510" }
+    };
+    const pal = themes[state.theme] || themes.red;
+
+    const measureCanvas = document.createElement("canvas");
+    const mctx = measureCanvas.getContext("2d");
+
+    // Measure dynamic height
+    mctx.font = "900 56px 'SimHei', 'PingFang SC', sans-serif";
+    const titleLines = wrapText(mctx, state.title || "无题大字报", contentW);
+
+    mctx.font = "800 26px 'KaiTi', 'STKaiti', serif";
+    const subLines = state.subtitle.trim() ? wrapText(mctx, state.subtitle, contentW - 24) : [];
+
+    mctx.font = "700 28px 'KaiTi', 'STKaiti', 'Songti SC', serif";
+    const bodyLines = wrapText(mctx, state.body, contentW);
+
+    const validCharges = state.charges.filter(c => c.trim() !== "");
+    mctx.font = "700 26px 'KaiTi', 'STKaiti', 'Songti SC', serif";
+    const chargeBlocks = validCharges.map(c => wrapText(mctx, c, contentW - 118));
+
+    let H = 64; // top outer margin
+    H += 46; // slogan + border
+    H += titleLines.length * 68 + 18;
+    if (subLines.length) H += subLines.length * 36 + 34;
+    H += bodyLines.length * 46 + 26;
+    if (chargeBlocks.length) {
+      H += 64; // box header
+      chargeBlocks.forEach(lines => { H += lines.length * 38 + 18; });
+      H += 36;
+    }
+    H += 95; // footer + bottom margin
+    H = Math.max(H, 860);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext("2d");
+
+    // Paper base
+    ctx.fillStyle = pal.bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // Subtle vintage grain & vignette
+    const grad = ctx.createRadialGradient(W * 0.5, H * 0.25, 60, W * 0.5, H * 0.5, H * 0.75);
+    grad.addColorStop(0, "rgba(255,220,160,0.12)");
+    grad.addColorStop(1, "rgba(0,0,0,0.28)");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.fillStyle = "rgba(0,0,0,0.035)";
+    for (let y = 0; y < H; y += 6) {
+      ctx.fillRect(0, y, W, 1);
+    }
+
+    // Double retro border
+    const bx = 36;
+    const by = 36;
+    const bw = W - 72;
+    const bh = H - 72;
+    ctx.strokeStyle = pal.ink;
+    ctx.lineWidth = 5;
+    ctx.strokeRect(bx, by, bw, bh);
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(bx + 8, by + 8, bw - 16, bh - 16);
+
+    let curY = by + 48;
+    const centerX = W / 2;
+    const leftX = padX + innerPad;
+
+    // Top slogan
+    ctx.fillStyle = pal.ink;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = "900 22px 'SimHei', 'PingFang SC', sans-serif";
+    ctx.fillText(state.slogan || "坚决彻底批倒批臭", centerX, curY);
+    curY += 22;
+    ctx.strokeStyle = pal.ink;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(leftX, curY);
+    ctx.lineTo(W - leftX, curY);
+    ctx.stroke();
+    curY += 46;
+
+    // Main title
+    ctx.fillStyle = pal.title;
+    ctx.font = "900 56px 'SimHei', 'PingFang SC', sans-serif";
+    titleLines.forEach(line => {
+      ctx.fillText(line, centerX, curY);
+      curY += 68;
+    });
+    curY += 4;
+
+    // Subtitle
+    if (subLines.length) {
+      const subBoxH = subLines.length * 36 + 18;
+      ctx.fillStyle = "rgba(0,0,0,0.12)";
+      ctx.fillRect(leftX, curY - 22, contentW, subBoxH);
+      ctx.fillStyle = pal.ink;
+      ctx.font = "800 26px 'KaiTi', 'STKaiti', serif";
+      subLines.forEach((line, idx) => {
+        ctx.fillText(line, centerX, curY + idx * 36 + 4);
+      });
+      curY += subBoxH + 14;
+    }
+
+    // Body text
+    ctx.textAlign = "left";
+    ctx.fillStyle = pal.ink;
+    ctx.font = "700 28px 'KaiTi', 'STKaiti', 'Songti SC', serif";
+    bodyLines.forEach(line => {
+      ctx.fillText(line, leftX, curY);
+      curY += 46;
+    });
+    curY += 16;
+
+    // Charges box
+    if (chargeBlocks.length) {
+      let boxH = 66;
+      chargeBlocks.forEach(lines => { boxH += lines.length * 38 + 18; });
+      boxH += 14;
+
+      ctx.fillStyle = "rgba(0,0,0,0.06)";
+      ctx.fillRect(leftX, curY, contentW, boxH);
+      ctx.strokeStyle = pal.ink;
+      ctx.lineWidth = 3;
+      ctx.strokeRect(leftX, curY, contentW, boxH);
+
+      ctx.textAlign = "center";
+      ctx.fillStyle = pal.ink;
+      ctx.font = "900 26px 'SimHei', sans-serif";
+      ctx.fillText("【资产阶级右派罪状清单】", centerX, curY + 30);
+
+      ctx.strokeStyle = pal.ink;
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([6, 6]);
+      ctx.beginPath();
+      ctx.moveTo(leftX + 18, curY + 52);
+      ctx.lineTo(leftX + contentW - 18, curY + 52);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      let cy = curY + 80;
+      chargeBlocks.forEach((lines, idx) => {
+        // Badge
+        ctx.fillStyle = pal.badgeBg;
+        ctx.fillRect(leftX + 18, cy - 15, 84, 30);
+        ctx.fillStyle = pal.badgeInk;
+        ctx.textAlign = "center";
+        ctx.font = "900 18px 'SimHei', sans-serif";
+        ctx.fillText("罪状" + (idx + 1), leftX + 60, cy);
+
+        // Text
+        ctx.fillStyle = pal.ink;
+        ctx.textAlign = "left";
+        ctx.font = "700 26px 'KaiTi', 'STKaiti', 'Songti SC', serif";
+        lines.forEach(l => {
+          ctx.fillText(l, leftX + 114, cy);
+          cy += 38;
+        });
+        cy += 18;
+      });
+      curY += boxH + 28;
+    }
+
+    // Footer line
+    const footY = H - 84;
+    ctx.strokeStyle = pal.ink;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(leftX, footY - 26);
+    ctx.lineTo(W - leftX, footY - 26);
+    ctx.stroke();
+
+    ctx.fillStyle = pal.ink;
+    ctx.font = "800 22px 'KaiTi', 'STKaiti', serif";
+    ctx.textAlign = "left";
+    ctx.fillText(state.sign, leftX, footY);
+    ctx.textAlign = "right";
+    ctx.fillText(state.date, W - leftX, footY);
+
+    // Stamp (upright rotation, never mirrored)
+    if (state.stamp.trim()) {
+      ctx.save();
+      ctx.translate(W - 145, footY - 72);
+      ctx.rotate(-0.19);
+      ctx.font = "900 26px 'SimHei', sans-serif";
+      const tw = ctx.measureText(state.stamp).width;
+      const sw = Math.max(tw + 28, 120);
+      const sh = 48;
+      ctx.strokeStyle = pal.stamp;
+      ctx.lineWidth = 4;
+      ctx.strokeRect(-sw / 2, -sh / 2, sw, sh);
+      ctx.fillStyle = pal.stamp;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(state.stamp, 0, 1);
+      ctx.restore();
+    }
+
+    const dataUrl = canvas.toDataURL("image/png");
+    els.exportedImg.src = dataUrl;
+    els.downloadLink.href = dataUrl;
+    els.exportModal.classList.add("open");
+  }
+
+  initPresets();
+  syncInputs();
+  renderChargesEditor();
+  renderPreview();
+  bindEvents();
+})();
+</script>
+</body>
+</html>
